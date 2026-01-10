@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+    :root {
+        --color-primary: #3b82f6;
+        --color-primary-dark: #1e40af;
+
+        --header: 48px; 
+        --bar: 58px;
+    }
+
+    html.dark {
+        --color-primary: #1e40af;
+        --color-secondary: ;
+    }
+
+    /* Dark mode cho toàn bộ trang */
+    body {
+        background-color: #fff;
+    }
+
+    html.dark body {
+        background-color: rgb(17, 24, 39);
+    }
+
+}
