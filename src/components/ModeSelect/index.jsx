@@ -16,18 +16,26 @@ function ModeSelect() {
 
   const currentTheme = theme.find(t => t.value === mode)
   return (
-    <Listbox value={mode} onChange={setMode}>
-      <ListboxButton className="ml-4  w-24 flex items-center gap-2  px-3 py-2 rounded border bg-(--color-primary) text-white border-white dark:border-white dark:bg-(--color-primary) dark:text-white">
-        {currentTheme?.name}
-        {currentTheme?.icon}
-      </ListboxButton>
+    <Listbox value={mode} onChange={setMode} >
+      <div className="relative ml-4">
+        <ListboxButton className="peer w-24 flex items-center gap-2 px-3 py-2 rounded border border-[#A4A1AA] data-open:text-(--color-primary) outline-none data-open:border-(--color-primary) text-[#505258] button:focus:text-(--color-primary) cursor-pointer dark:text-white">
+          {currentTheme?.name}
+          {currentTheme?.icon}
+        </ListboxButton>
+        <span className="absolute -top-2 left-2 px-1 bg-white dark:bg-[#111827] text-xs font-normal text-[#A4A1AA] peer-data-open:text-(--color-primary) dark:text-gray-400 pointer-events-none transition-colors">
+          Mode
+        </span>
+      </div>
 
-      <ListboxOptions anchor="bottom" className="rounded border bg-(--color-primary) dark:bg-(--color-primary) border-white dark:border-white shadow-lg">
+      <ListboxOptions
+        modal={false}
+        anchor="bottom"
+        className=" w-24 rounded focus:outline-none bg-white dark:bg-gray-700 border-white shadow-lg">
         {theme.map((t) => (
           <ListboxOption
             key={t.value}
             value={t.value}
-            className="w-24 flex items-center gap-2 px-3 py-2 rounded data-focus:bg-blue-100 dark:text-amber-50 dark:hover:text-gray-800"
+            className=" flex items-center gap-2 px-3 py-2 rounded data-focus:bg-blue-100 dark:text-amber-50 dark:hover:text-gray-800"
           >
             {t.name}
             {t.icon}

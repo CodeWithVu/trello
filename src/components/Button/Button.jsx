@@ -7,10 +7,10 @@ export const Button = ({
   className = '',
   ...props
 }) => {
-  const baseStyle = 'font-medium rounded transition-colors'
+  const baseStyle = 'font-medium rounded'
 
   const variantStyles = {
-    primary: ''
+    primary: 'w-20 text-(--color-primary) border-(--color-primary) border cursor-pointer hover:bg-(--color-primary) hover:text-white'
   }
 
   const sizeStyles = {
