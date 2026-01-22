@@ -14,8 +14,8 @@ import { IoMdHelpCircleOutline } from 'react-icons/io'
 
 function AppBar() {
   return (
-    <div className="w-full gap-8 h-(--header) flex items-center justify-between border-b
-       overflow-x-auto overflow-y-hidden
+    <div className="w-full gap-8 h-(--header) flex items-center justify-between
+       overflow-x-auto
       [&::-webkit-scrollbar]:w-2
       [&::-webkit-scrollbar]:h-2
     [&::-webkit-scrollbar-track]:bg-gray-100
@@ -23,7 +23,7 @@ function AppBar() {
     [&::-webkit-scrollbar-thumb]:rounded-md
     dark:[&::-webkit-scrollbar-track]:bg-neutral-700
     dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
-      <div className="mx-4 gap-4 flex items-center text-blue-500 ">
+      <div className="px-4 gap-4 flex items-center text-blue-500 ">
         <div className="gap-1 flex items-center">
           <TrelloLogo className="w-6 h-6" />
           <span className="text-base font-bold">Trello</span>
@@ -33,20 +33,20 @@ function AppBar() {
           <Recent />
           <Starred />
           <Template />
-          <Button variant = "primary" className="">Create</Button>
+          <Button variant="primary" className="">Create</Button>
         </div>
       </div>
-      <div className="mx-4 gap-4 flex items-center">
+      <div className="px-4 gap-4 flex items-center">
         <Input type="text" name="full_name" as={Fragment}>
           {<input className="min-w-30 border p-2 rounded-sm focus:outline-1 focus:outline-(--color-primary) focus:text-(--color-primary) h-10 text-[#A4A1AA]" placeholder="Search..." />}
         </Input>
         <ModeSelect />
         <Tooltip content="Notification">
-          <FaRegBell className="text-xl dark:text-amber-50 text-[#505258]"/>
+          <FaRegBell className="text-xl dark:text-amber-50 text-[#505258]" />
         </Tooltip>
 
-        <Tooltip content="Need help?">
-          <IoMdHelpCircleOutline className="text-xl dark:text-amber-50 text-[#505258]"/>
+        <Tooltip content="Need help?" className="w-20">
+          <IoMdHelpCircleOutline className="text-xl dark:text-amber-50 text-[#505258]" />
         </Tooltip>
         <Profile />
       </div>

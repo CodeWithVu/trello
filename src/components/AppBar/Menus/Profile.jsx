@@ -4,10 +4,11 @@ import images from '~/assets'
 function Profile() {
   return (
     <Menu as="div" className="relative">
-      <MenuButton className="relative focus:outline-none">
-        <img src={images.avatarCherry} className="w-8 h-8 rounded-full object-cover"/>
+      <MenuButton className="relative focus:outline-none shrink-0 cursor-pointer ">
+        <img src={images.avatarCherry} className="w-8 h-8 rounded-full object-cover hover:brightness-90"/>
       </MenuButton>
       <MenuItems
+        anchor="bottom end"
         modal={false}
         className="absolute -right-2 top-full mt-1  w-32 origin-top-right rounded-xl border border-white/5 bg-white p-1 text-sm/6 text-(--color-primary) transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0">
         <MenuSection>
