@@ -18,11 +18,11 @@ function ModeSelect() {
   return (
     <Listbox value={mode} onChange={setMode} >
       <div className="relative ml-4">
-        <ListboxButton className="peer w-24 flex items-center gap-2 px-3 py-2 rounded border border-[#A4A1AA] data-open:text-(--color-primary) outline-none data-open:border-(--color-primary) text-[#505258] button:focus:text-(--color-primary) cursor-pointer dark:text-white">
+        <ListboxButton className="peer w-24 flex items-center gap-2 px-3 py-2 rounded border border-[#A4A1AA] data-open:text-white outline-none data-open:border-white text-white button:focus:text-(--color-primary) cursor-pointer dark:text-white">
           {currentTheme?.name}
           {currentTheme?.icon}
         </ListboxButton>
-        <span className="absolute -top-2 left-2 px-1 bg-white dark:bg-[#111827] text-xs font-normal text-[#A4A1AA] peer-data-open:text-(--color-primary) dark:text-gray-400 pointer-events-none transition-colors">
+        <span className="absolute -top-2 left-2 px-1 z-10 bg-[#1565c0]  dark:bg-[#2c3e50]  text-xs font-normal text-white peer-data-open:text-white dark:text-white pointer-events-none transition-colors">
           Mode
         </span>
       </div>

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
-function Tooltip({ children, content, className }) {
+function Tooltip({ children, content, className, contentClassName }) {
   const [isVisible, setIsVisible] = useState(false)
   const [position, setPosition] = useState({ top: 0, left: 0 })
   const triggerRef = useRef(null)
@@ -28,7 +28,7 @@ function Tooltip({ children, content, className }) {
         ref={triggerRef}
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
-        className="flex cursor-pointer"
+        className={`flex cursor-pointer ${className || ''}`}
       >
         {children}
       </div>
@@ -36,7 +36,7 @@ function Tooltip({ children, content, className }) {
       {/* Tooltip được render ra ngoài DOM bằng Portal */}
       {isVisible && createPortal(
         <div
-          className={`fixed z-9999 px-2 py-1 bg-gray-800 text-white text-xs rounded -translate-x-1/2 pointer-events-none ${className}
+          className={`fixed z-9999 px-2 py-1 bg-gray-800 text-white text-xs rounded -translate-x-1/2 pointer-events-none ${contentClassName || ''}
                      after:content-[''] after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-4 after:border-x-transparent after:border-t-transparent after:border-b-gray-800`}
           style={{ top: position.top, left: position.left }}
         >

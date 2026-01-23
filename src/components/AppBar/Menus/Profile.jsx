@@ -3,8 +3,8 @@ import images from '~/assets'
 
 function Profile() {
   return (
-    <Menu as="div" className="relative">
-      <MenuButton className="relative focus:outline-none shrink-0 cursor-pointer ">
+    <Menu as="div" className="relative shrink-0">
+      <MenuButton className="focus:outline-none  cursor-pointer">
         <img src={images.avatarCherry} className="w-8 h-8 rounded-full object-cover hover:brightness-90"/>
       </MenuButton>
       <MenuItems

@@ -11,12 +11,12 @@ function AvatarGroup({ children, max }) {
       {visibleChildren.map((child, index) => {
         // Clone element to add overlapping margin style if it's not the first one
         return React.cloneElement(child, {
-          className: `${child.props.className || ''} ${index > 0 ? '-ml-2' : ''}`
+          className: `${child.props.className || ''} ${index > 0 ? '-ml-2 flex shrink-0' : ''}`
         })
       })}
 
       {extraCount > 0 && (
-        <div className=" w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 text-xs font-medium dark:text-gray-900">
+        <div className=" w-8 h-8 -ml-2 border border-white rounded-full flex shrink-0 items-center justify-center bg-gray-200 text-xs font-medium dark:text-gray-900">
           +{extraCount}
         </div>
       )}

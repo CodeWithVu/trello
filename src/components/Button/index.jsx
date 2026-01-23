@@ -10,12 +10,12 @@ export const Button = ({
   const baseStyle = 'font-medium rounded'
 
   const variantStyles = {
-    primary: 'w-20 text-(--color-primary) border-(--color-primary) border cursor-pointer hover:bg-(--color-primary) hover:text-white'
+    primary: 'text-(--color-primary) border-(--color-primary) border cursor-pointer hover:bg-(--color-primary) hover:text-white'
   }
 
   const sizeStyles = {
-    sm: 'px-3 py-1 text-sm',
-    md: 'px-4 py-2'
+    sm: 'px-2 py-1 text-sm',
+    md: 'px-3 py-2'
   }
 
   // Lấy class tương ứng, nếu không có thì dùng primary

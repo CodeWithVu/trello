@@ -6,15 +6,20 @@ import Starred from './Menus/Starred'
 import Template from './Menus/Template'
 import Profile from './Menus/Profile'
 import Tooltip from '~/components/Tooltip'
-import { Button } from '~/components/Button/Button.jsx'
-import { Input } from '@headlessui/react'
-import { Fragment } from 'react'
+
+import { useState } from 'react'
+import { Button } from '~/components/Button'
 import { FaRegBell } from 'react-icons/fa6'
+import { BiSolidAddToQueue } from 'react-icons/bi'
 import { IoMdHelpCircleOutline } from 'react-icons/io'
+import { IoSearchSharp } from 'react-icons/io5'
+import { AiOutlineClose } from 'react-icons/ai'
 
 function AppBar() {
+  const [searchValue, setSearchValue] = useState('')
+
   return (
-    <div className="w-full gap-8 h-(--header) flex items-center justify-between
+    <div className="w-full gap-8 h-(--header) flex items-center justify-between bg-[#024DC5] dark:bg-[#2c3e50]
        overflow-x-auto
       [&::-webkit-scrollbar]:w-2
       [&::-webkit-scrollbar]:h-2
@@ -23,30 +28,45 @@ function AppBar() {
     [&::-webkit-scrollbar-thumb]:rounded-md
     dark:[&::-webkit-scrollbar-track]:bg-neutral-700
     dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
-      <div className="px-4 gap-4 flex items-center text-blue-500 ">
+      <div className="px-4 gap-4 flex items-center text-white ">
         <div className="gap-1 flex items-center">
           <TrelloLogo className="w-6 h-6" />
           <span className="text-base font-bold">Trello</span>
         </div>
-        <div className="hidden sm:flex gap-4">
+        <div className="hidden sm:flex gap-4 ">
           <Workspace />
           <Recent />
           <Starred />
           <Template />
-          <Button variant="primary" className="">Create</Button>
+          <Button variant="primary" className="flex items-center gap-1 text-white border-none hover:border-none hover:bg-transparent transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 ">
+            <BiSolidAddToQueue className="text-md"/>
+            Create
+          </Button>
         </div>
       </div>
-      <div className="px-4 gap-4 flex items-center">
-        <Input type="text" name="full_name" as={Fragment}>
-          {<input className="min-w-30 border p-2 rounded-sm focus:outline-1 focus:outline-(--color-primary) focus:text-(--color-primary) h-10 text-[#A4A1AA]" placeholder="Search..." />}
-        </Input>
+      <div className="px-4 gap-4 flex items-center ">
+        <div className="h-10 flex border border-[#A4A1AA] rounded-sm text-[#A4A1AA] hover:border-white group
+                focus-within:border-white focus-within:text-white transition-colors">
+          <input
+            placeholder="Search..."
+            className="pl-2 border-none outline-none bg-transparent text-inherit"
+            value={searchValue}
+            onChange = {(e) => setSearchValue(e.target.value)}
+          />
+          <button className={`mx-1 cursor-pointer ${searchValue ? '' : 'hidden'}`} onClick={() => setSearchValue('')}>
+            <AiOutlineClose />
+          </button>
+          <button className="relative group-hover:text-white cursor-pointer after:content-[''] after:absolute after:left-0 after:top-2 after:bottom-2 after:w-px after:bg-gray-400 hover:-translate-y-1">
+            <IoSearchSharp className="w-8 mx-1"/>
+          </button>
+        </div>
         <ModeSelect />
         <Tooltip content="Notification">
-          <FaRegBell className="text-xl dark:text-amber-50 text-[#505258]" />
+          <FaRegBell className="text-xl dark:text-amber-50 text-white" />
         </Tooltip>
 
-        <Tooltip content="Need help?" className="w-20">
-          <IoMdHelpCircleOutline className="text-xl dark:text-amber-50 text-[#505258]" />
+        <Tooltip content="Need help?" contentClassName="w-20">
+          <IoMdHelpCircleOutline className="text-xl dark:text-amber-50 text-white" />
         </Tooltip>
         <Profile />
       </div>
