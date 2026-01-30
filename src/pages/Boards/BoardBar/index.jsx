@@ -1,15 +1,17 @@
-import { FaWindows, FaEarthAsia } from 'react-icons/fa6'
-import { MdAddToDrive, MdFilterList } from 'react-icons/md'
-import { TbAutomation } from 'react-icons/tb'
-import { MdOutlinePersonAddAlt1 } from 'react-icons/md'
-
 import Button from '~/components/ui/Button'
 import { Chip } from '~/components/ui/Chip'
 import AvatarGroup from '~/components/ui/AvatarGroup'
 import images from '~/assets'
 import Tooltip from '~/components/ui/Tooltip'
+import { capitalizeFirstLetter } from '~/utils/formatters'
 
-function BoardBar() {
+import { FaWindows, FaEarthAsia } from 'react-icons/fa6'
+import { MdAddToDrive, MdFilterList } from 'react-icons/md'
+import { TbAutomation } from 'react-icons/tb'
+import { MdOutlinePersonAddAlt1 } from 'react-icons/md'
+
+
+function BoardBar({ board }) {
   return (
     <div className="w-full h-(--board-bar-height) flex items-center justify-between bg-[#015FDD] dark:bg-[#34495e]
     overflow-x-auto overflow-y-hidden
@@ -24,13 +26,13 @@ function BoardBar() {
       <div className="px-4 gap-4 flex items-center shrink-0">
         <Chip
           icon=<FaWindows />
-          label="Vũ Nguyễn Mernstack Board"
+          label={board?.title}
           clickable={true}
           className="text-white bg-transparent hover:bg-[#175fbf] dark:hover:bg-[#34495e] rounded-b-sm"
         />
         <Chip
           icon=<FaEarthAsia />
-          label="Public/Private Workspace"
+          label={capitalizeFirstLetter(board?.type)}
           clickable={true}
           className="text-white bg-transparent"
         />

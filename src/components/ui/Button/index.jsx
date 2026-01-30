@@ -7,7 +7,7 @@ const Button = ({
   className = '',
   ...props
 }) => {
-  const baseStyle = 'font-medium rounded'
+  const baseStyle = 'font-medium rounded select-none'
 
   const variantStyles = {
     primary: 'text-(--color-primary) border-(--color-primary) border cursor-pointer'
