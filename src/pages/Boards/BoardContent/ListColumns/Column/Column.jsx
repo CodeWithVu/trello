@@ -1,5 +1,7 @@
 import Tooltip from '~/components/ui/Tooltip'
 import ListCards from './ListCards/ListCards'
+import { mapOrder } from '~/utils/sorts'
+
 
 import { Menu, MenuButton, MenuItem, MenuItems, MenuSeparator } from '@headlessui/react'
 import { AiOutlineDown } from 'react-icons/ai'
@@ -14,6 +16,8 @@ const COLUMN_HEADER_HEIGHT = '50px'
 const COLUMN_FOOTER_HEIGHT = '70px'
 
 function Column({ column }) {
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+
   return (
     <div className="shrink-0 min-w-67.5 max-w-67.5 max-h-[calc(var(--board-content-height)-30px)] bg-[#ebecf0] dark:bg-[#333643] ml-4 first:ml-2.5 last:mr-2.5 rounded-md flex flex-col">
       {/* Header */}
@@ -77,7 +81,7 @@ function Column({ column }) {
       </div>
 
       {/* List cards */}
-      <ListCards cards={column?.cards}/>
+      <ListCards cards={orderedCards}/>
 
       {/* Footer */}
       <div
