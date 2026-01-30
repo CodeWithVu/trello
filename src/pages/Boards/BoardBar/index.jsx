@@ -3,15 +3,15 @@ import { MdAddToDrive, MdFilterList } from 'react-icons/md'
 import { TbAutomation } from 'react-icons/tb'
 import { MdOutlinePersonAddAlt1 } from 'react-icons/md'
 
-import { Chip } from '~/components/Chip'
-import AvatarGroup from '~/components/AvatarGroup'
+import Button from '~/components/ui/Button'
+import { Chip } from '~/components/ui/Chip'
+import AvatarGroup from '~/components/ui/AvatarGroup'
 import images from '~/assets'
-import Tooltip from '~/components/Tooltip'
-import { Button } from '~/components/Button'
+import Tooltip from '~/components/ui/Tooltip'
 
 function BoardBar() {
   return (
-    <div className="w-full h-(--bar) flex items-center border-y-2 border-(--color-primary) dark:border-[#8696B0] justify-between bg-[#015FDD] dark:bg-[#34495e]
+    <div className="w-full h-(--board-bar-height) flex items-center justify-between bg-[#015FDD] dark:bg-[#34495e]
     overflow-x-auto overflow-y-hidden
       [&::-webkit-scrollbar]:w-2
       [&::-webkit-scrollbar]:h-2

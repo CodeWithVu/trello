@@ -5,10 +5,10 @@ import Recent from './Menus/Recent'
 import Starred from './Menus/Starred'
 import Template from './Menus/Template'
 import Profile from './Menus/Profile'
-import Tooltip from '~/components/Tooltip'
+import Tooltip from '~/components/ui/Tooltip'
+import Button from '~/components/ui/Button'
 
 import { useState } from 'react'
-import { Button } from '~/components/Button'
 import { FaRegBell } from 'react-icons/fa6'
 import { BiSolidAddToQueue } from 'react-icons/bi'
 import { IoMdHelpCircleOutline } from 'react-icons/io'
@@ -19,7 +19,7 @@ function AppBar() {
   const [searchValue, setSearchValue] = useState('')
 
   return (
-    <div className="w-full gap-8 h-(--header) flex items-center justify-between bg-[#024DC5] dark:bg-[#2c3e50]
+    <div className="w-full gap-8 h-(--header-height) flex items-center justify-between bg-[#024DC5] dark:bg-[#2c3e50]
        overflow-x-auto
       [&::-webkit-scrollbar]:w-2
       [&::-webkit-scrollbar]:h-2

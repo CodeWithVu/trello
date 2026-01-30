@@ -22,7 +22,7 @@ function ModeSelect() {
           {currentTheme?.name}
           {currentTheme?.icon}
         </ListboxButton>
-        <span className="absolute -top-2 left-2 px-1 z-10 bg-[#1565c0]  dark:bg-[#2c3e50]  text-xs font-normal text-white peer-data-open:text-white dark:text-white pointer-events-none transition-colors">
+        <span className="absolute -top-2 left-2 px-1 z-10 bg-[#024DC5]  dark:bg-[#2c3e50]  text-xs font-normal text-white peer-data-open:text-white dark:text-white pointer-events-none transition-colors">
           Mode
         </span>
       </div>

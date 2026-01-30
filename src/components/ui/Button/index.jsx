@@ -1,4 +1,4 @@
-export const Button = ({
+const Button = ({
   children,
   variant = 'primary',
   size = 'md',
@@ -10,7 +10,7 @@ export const Button = ({
   const baseStyle = 'font-medium rounded'
 
   const variantStyles = {
-    primary: 'text-(--color-primary) border-(--color-primary) border cursor-pointer hover:bg-(--color-primary) hover:text-white'
+    primary: 'text-(--color-primary) border-(--color-primary) border cursor-pointer'
   }
 
   const sizeStyles = {
@@ -34,3 +34,4 @@ export const Button = ({
     </button>
   )
 }
+export default Button
