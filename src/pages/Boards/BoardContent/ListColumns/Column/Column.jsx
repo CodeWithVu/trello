@@ -8,24 +8,44 @@ import { AiOutlineDown } from 'react-icons/ai'
 import { MdAddCard,
   MdOutlineContentCut, MdOutlineContentCopy,
   MdContentPaste, MdDeleteForever,
-  MdOutlineArchive, MdDragHandle }
-  from 'react-icons/md'
-
+  MdOutlineArchive, MdDragHandle } from 'react-icons/md'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 const COLUMN_HEADER_HEIGHT = '50px'
 const COLUMN_FOOTER_HEIGHT = '70px'
 
 function Column({ column }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition
+  } = useSortable({ id: column._id, data: { ...column } })
+
+  const dndKitColumnStyle = {
+    // touchAction: 'none', // Dành cho sensor default dạng PointerSensor
+    transform: CSS.Translate.toString(transform),
+    transition
+  }
+
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
 
   return (
-    <div className="shrink-0 min-w-67.5 max-w-67.5 max-h-[calc(var(--board-content-height)-30px)] bg-[#ebecf0] dark:bg-[#333643] ml-4 first:ml-2.5 last:mr-2.5 rounded-md flex flex-col">
+    <div
+      className="shrink-0 min-w-67.5 max-w-67.5 max-h-[calc(var(--board-content-height)-30px)] bg-[#ebecf0] dark:bg-[#333643] ml-4 first:ml-2.5 last:mr-2.5 rounded-md flex flex-col"
+      ref={setNodeRef}
+      style={dndKitColumnStyle}
+      {...attributes}
+      {...listeners}
+    >
       {/* Header */}
       <div
         className="shrink-0 px-4 py-3 flex items-center justify-between"
         style={{ height: COLUMN_HEADER_HEIGHT }}
       >
-        <span className="font-semibold text-lg">Column title</span>
+        <span className="font-semibold text-lg">{column?.title}</span>
         <div>
           <Menu >
             <MenuButton className="inline-flex items-center pr-0 py-1.5 text-sm/6  cursor-pointer focus:not-data-focus:outline-none">
