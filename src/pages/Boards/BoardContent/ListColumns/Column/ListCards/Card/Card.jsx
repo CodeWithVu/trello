@@ -2,13 +2,40 @@ import MuiCard from '~/components/ui/Card'
 import CardMedia from '~/components/ui/Card/CardMedia'
 import CardContent from '~/components/ui/Card/CardContent'
 import Button from '~/components/ui/Button'
+
 import { MdGroup, MdAttachFile } from 'react-icons/md'
-import { BiSolidCommentDetail } from 'react-icons/bi'
+import { BiBorderRadius, BiSolidCommentDetail } from 'react-icons/bi'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 function Card({ card }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({
+    id: card._id,
+    data: { ...card }
+  })
+
+  const dndKitCardStyle = {
+    // touchAction: 'none', // Dành cho sensor default dạng PointerSensor
+    transform: CSS.Translate.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : undefined
+  }
+
   return (
-    <div>
-      <MuiCard>
+    <div
+      ref={setNodeRef}
+      style={dndKitCardStyle}
+      {...attributes}
+      {...listeners}>
+      <MuiCard
+      >
         {card?.cover && <CardMedia image={card?.cover}/>}
         <CardContent>
           <h1 className="text-md">{card?.title}</h1>
