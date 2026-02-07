@@ -2,12 +2,14 @@ import ListColumn from './ListColumns/ListColumns'
 import { mapOrder } from '~/utils/sorts'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
+import { generatePlaceholderCard } from '~/utils/formatters'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { DndContext, PointerSensor, useSensor, useSensors, MouseSensor, TouchSensor, DragOverlay, defaultDropAnimationSideEffects, closestCorners, pointerWithin, rectIntersection, getFirstCollision, closestCenter } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
+
 
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
@@ -80,9 +82,18 @@ function BoardContent({ board }) {
         // Xóa card ở column đã bị kéo
         nextActiveColumn.cards = nextActiveColumn.cards.filter(card => card._id !== activeDraggingCardId)
 
+        // Thêm placeholder card nếu card cuối cùng bị kéo làm rỗng column
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+        }
+
+        // xóa placehoder card đi nếu đang tồn tại
+        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card.FE_PlaceholderCard)
+
         // cập nhật lại mảng card
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
       }
+
 
       // Kiểm tra xem card đang kéo có đang ở column over hay chưa, nếu có thì xóa đi
       // Column mới

@@ -34,29 +34,29 @@ function Card({ card }) {
       style={dndKitCardStyle}
       {...attributes}
       {...listeners}>
-      <MuiCard
+      <MuiCard className={card?.FE_PlaceholderCard ? 'hidden' : 'block'}
       >
         {card?.cover && <CardMedia image={card?.cover}/>}
         <CardContent>
           <h1 className="text-md">{card?.title}</h1>
         </CardContent>
         <div className="flex justify-between">
-          {!!card?.memberIds.length &&
+          {!!card?.memberIds?.length &&
           <Button className="py-1 outline-none border-none flex items-center gap-2  leading-6">
             <MdGroup className="text-lg"/>
-            <span className="text-sm">{card?.memberIds.length}</span>
+            <span className="text-sm">{card?.memberIds?.length}</span>
           </Button>
           }
-          {!!card?.comments.length &&
+          {!!card?.comments?.length &&
           <Button className="py-1 outline-none border-none flex items-center gap-2 leading-6">
             <BiSolidCommentDetail className="text-lg"/>
-            <span className="text-sm">{card?.comments.length}</span>
+            <span className="text-sm">{card?.comments?.length}</span>
           </Button>
           }
-          {!!card?.attachments.length &&
+          {!!card?.attachments?.length &&
           <Button className="py-1 outline-none border-none flex items-center gap-2 leading-6">
             <MdAttachFile className="text-lg"/>
-            <span className="text-sm">{card?.attachments.length}</span>
+            <span className="text-sm">{card?.attachments?.length}</span>
           </Button>
           }
         </div>
