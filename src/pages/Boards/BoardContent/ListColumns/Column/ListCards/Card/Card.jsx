@@ -4,7 +4,7 @@ import CardContent from '~/components/ui/Card/CardContent'
 import Button from '~/components/ui/Button'
 
 import { MdGroup, MdAttachFile } from 'react-icons/md'
-import { BiBorderRadius, BiSolidCommentDetail } from 'react-icons/bi'
+import { BiSolidCommentDetail } from 'react-icons/bi'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
