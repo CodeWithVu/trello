@@ -6,7 +6,8 @@ import { generatePlaceholderCard } from '~/utils/formatters'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 // eslint-disable-next-line no-unused-vars
-import { DndContext, PointerSensor, useSensor, useSensors, MouseSensor, TouchSensor, DragOverlay, defaultDropAnimationSideEffects, closestCorners, pointerWithin, rectIntersection, getFirstCollision, closestCenter } from '@dnd-kit/core'
+import { DndContext, PointerSensor, useSensor, useSensors, DragOverlay, defaultDropAnimationSideEffects, closestCorners, pointerWithin, rectIntersection, getFirstCollision, closestCenter } from '@dnd-kit/core'
+import { MouseSensor, TouchSensor } from '~/customLib/dndKitSensor'
 import { arrayMove } from '@dnd-kit/sortable'
 import { cloneDeep, isEmpty } from 'lodash'
 

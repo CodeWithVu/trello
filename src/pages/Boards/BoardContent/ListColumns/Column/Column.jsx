@@ -148,6 +148,7 @@ function Column({ column }) {
                   autoFocus
                   placeholder="Enter card title..."
                   className="pl-2 w-full h-10 border border-(--color-primary) rounded-sm bg-white outline-none  text-black"
+                  data-no-dnd="true"
                   value={newCardTitle}
                   onChange = {(e) => setNewCardTitle(e.target.value)}
                 />
