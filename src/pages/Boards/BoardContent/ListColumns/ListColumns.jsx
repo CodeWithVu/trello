@@ -1,9 +1,10 @@
 import Column from './Column/Column'
 import Button from '~/components/ui/Button'
 
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { MdAddBox } from 'react-icons/md'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
-import { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 
 function ListColumn({ columns }) {
@@ -13,7 +14,7 @@ function ListColumn({ columns }) {
 
   const addNewColumn = () => {
     if (!newColumnTitle) {
-      // console.error('please enter column title')
+      toast.error('Please enter column title!')
       return
     }
 

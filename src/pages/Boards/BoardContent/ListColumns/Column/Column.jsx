@@ -3,15 +3,16 @@ import ListCards from './ListCards/ListCards'
 import { mapOrder } from '~/utils/sorts'
 import Button from '~/components/ui/Button'
 
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Menu, MenuButton, MenuItem, MenuItems, MenuSeparator } from '@headlessui/react'
 import { AiOutlineDown, AiOutlineClose } from 'react-icons/ai'
 import { MdAddCard,
   MdOutlineContentCut, MdOutlineContentCopy,
   MdContentPaste, MdDeleteForever,
   MdOutlineArchive, MdDragHandle } from 'react-icons/md'
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
-import { useState } from 'react'
 
 const COLUMN_HEADER_HEIGHT = '50px'
 const COLUMN_FOOTER_HEIGHT = '70px'
@@ -44,7 +45,9 @@ function Column({ column }) {
 
   const addNewCard = () => {
     if (!newCardTitle) {
-      // console.error('please enter card title')
+      toast.error('Please enter card title!', {
+        position: 'bottom-right'
+      })
       return
     }
 
