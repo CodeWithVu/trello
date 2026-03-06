@@ -4,6 +4,7 @@ import AvatarGroup from '~/components/ui/AvatarGroup'
 import images from '~/assets'
 import Tooltip from '~/components/ui/Tooltip'
 import { capitalizeFirstLetter } from '~/utils/formatters'
+// import { fetchBoardDetailsAPI } from '~/apis'
 
 import { FaWindows, FaEarthAsia } from 'react-icons/fa6'
 import { MdAddToDrive, MdFilterList } from 'react-icons/md'
@@ -24,12 +25,14 @@ function BoardBar({ board }) {
     dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500
     ">
       <div className="px-4 gap-4 flex items-center shrink-0">
-        <Chip
-          icon=<FaWindows />
-          label={board?.title}
-          clickable={true}
-          className="text-white bg-transparent hover:bg-[#175fbf] dark:hover:bg-[#34495e] rounded-b-sm"
-        />
+        <Tooltip content={board?.description}>
+          <Chip
+            icon=<FaWindows />
+            label={board?.title}
+            clickable={true}
+            className="text-white bg-transparent hover:bg-[#175fbf] dark:hover:bg-[#34495e] rounded-b-sm"
+          />
+        </Tooltip>
         <Chip
           icon=<FaEarthAsia />
           label={capitalizeFirstLetter(board?.type)}

@@ -1,16 +1,17 @@
 import Tooltip from '~/components/ui/Tooltip'
 import ListCards from './ListCards/ListCards'
 import { mapOrder } from '~/utils/sorts'
-
+import Button from '~/components/ui/Button'
 
 import { Menu, MenuButton, MenuItem, MenuItems, MenuSeparator } from '@headlessui/react'
-import { AiOutlineDown } from 'react-icons/ai'
+import { AiOutlineDown, AiOutlineClose } from 'react-icons/ai'
 import { MdAddCard,
   MdOutlineContentCut, MdOutlineContentCopy,
   MdContentPaste, MdDeleteForever,
   MdOutlineArchive, MdDragHandle } from 'react-icons/md'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { useState } from 'react'
 
 const COLUMN_HEADER_HEIGHT = '50px'
 const COLUMN_FOOTER_HEIGHT = '70px'
@@ -37,6 +38,22 @@ function Column({ column }) {
   }
 
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  const [openNewCardForm, setOpenNewCardForm] = useState(false)
+  const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
+  const [newCardTitle, setNewCardTitle] = useState('')
+
+  const addNewCard = () => {
+    if (!newCardTitle) {
+      // console.error('please enter card title')
+      return
+    }
+
+    //Gọi API
+
+    //Đóng trang
+    toggleOpenNewCardForm()
+    setNewCardTitle('')
+  }
 
   return (
     <div
@@ -113,13 +130,37 @@ function Column({ column }) {
 
         {/* Footer */}
         <div
-          className="px-4 flex items-center justify-between shrink-0"
-          style={{ height: COLUMN_FOOTER_HEIGHT }}>
-          <button className="flex items-center gap-2 text-(--color-primary) select-none">
-            <MdAddCard />
-          Add new card
-          </button>
-          <Tooltip content="Drag to move"><MdDragHandle /></Tooltip>
+          className="p-4"
+          style={{ height: openNewCardForm ? 'auto' : COLUMN_FOOTER_HEIGHT }}>
+          {!openNewCardForm
+            ? <div className="flex items-center justify-between w-full">
+              <button className="flex items-center gap-2 text-(--color-primary) select-none"
+                onClick={toggleOpenNewCardForm}>
+                <MdAddCard />
+              Add new card
+              </button>
+              <Tooltip content="Drag to move"><MdDragHandle /></Tooltip>
+            </div>
+            : <div className="w-full flex items-center gap-1">
+              <div className=" border border-[#A4A1AA] rounded-sm text-[#e2dfe9] hover:border-white group
+                              focus-within:border-white focus-within:text-white transition-colors">
+                <input
+                  autoFocus
+                  placeholder="Enter card title..."
+                  className="pl-2 w-full h-10 border border-(--color-primary) rounded-sm bg-white outline-none  text-black"
+                  value={newCardTitle}
+                  onChange = {(e) => setNewCardTitle(e.target.value)}
+                />
+              </div>
+              <Button className="text-amber-50 bg-[#68B18C] hover:bg-[#0D751B] shadow-lg shrink-0"
+                onClick={addNewCard}
+              >Add</Button>
+              <AiOutlineClose
+                className="text-(--color-primary) cursor-pointer w-7 h-7 p-1 hover:bg-[#9C99A5] rounded-full shrink-0"
+                onClick={toggleOpenNewCardForm}
+              />
+            </div>
+          }
         </div>
       </div>
     </div>

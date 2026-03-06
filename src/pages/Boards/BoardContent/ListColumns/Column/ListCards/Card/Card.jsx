@@ -34,7 +34,7 @@ function Card({ card }) {
       style={dndKitCardStyle}
       {...attributes}
       {...listeners}>
-      <MuiCard className={card?.FE_PlaceholderCard ? 'hidden' : 'block'}
+      <MuiCard className={`${card?.FE_PlaceholderCard ? 'hidden' : 'block'} border border-transparent hover:border-(--color-primary) dark:hover:border-(--color-primary-dark)`}
       >
         {card?.cover && <CardMedia image={card?.cover}/>}
         <CardContent>

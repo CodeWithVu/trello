@@ -1,18 +1,4 @@
-// Boards list
-import AppBar from '~/components/AppBar'
-import BoardBar from './BoardBar'
-import BoardContent from './BoardContent/BoardContent'
-import { mockData } from '~/apis/Mock-data'
-
-
-function Board() {
-  return (
-    <div className="h-screen flow-root">
-      <AppBar />
-      <BoardBar board={mockData?.board} />
-      <BoardContent board={mockData?.board}/>
-    </div>
-  )
-}
+// src/pages/Boards/index.jsx
+import Board from './_id'
 
 export default Board
