@@ -17,7 +17,7 @@ import { MdAddCard,
 const COLUMN_HEADER_HEIGHT = '50px'
 const COLUMN_FOOTER_HEIGHT = '70px'
 
-function Column({ column }) {
+function Column({ column, createNewCard }) {
   const {
     attributes,
     listeners,
@@ -43,7 +43,7 @@ function Column({ column }) {
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
   const [newCardTitle, setNewCardTitle] = useState('')
 
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
       toast.error('Please enter card title!', {
         position: 'bottom-right'
@@ -52,6 +52,13 @@ function Column({ column }) {
     }
 
     //Gọi API
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id
+    }
+
+    //GỌi lên props function createNewCard ở component cha cao nhất là (board/_id.jsx)
+    await createNewCard(newCardData)
 
     //Đóng trang
     toggleOpenNewCardForm()

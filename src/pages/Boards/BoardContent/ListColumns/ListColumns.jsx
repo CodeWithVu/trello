@@ -7,18 +7,23 @@ import { MdAddBox } from 'react-icons/md'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 import { AiOutlineClose } from 'react-icons/ai'
 
-function ListColumn({ columns }) {
+function ListColumn({ columns, createNewColumn, createNewCard }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
   const [newColumnTitle, setNewColumnTitle] = useState('')
 
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!newColumnTitle) {
       toast.error('Please enter column title!')
       return
     }
 
     //Gọi API
+    const newColumnData = {
+      title: newColumnTitle
+    }
+
+    await createNewColumn(newColumnData)
 
     //Đóng trang
     toggleOpenNewColumnForm()
@@ -33,7 +38,7 @@ function ListColumn({ columns }) {
       [&::-webkit-scrollbar-thumb]:bg-white/50
       [&::-webkit-scrollbar-thumb]:rounded-full">
         {columns?.map((column) => {
-          return <Column key={column._id} column={column}/>
+          return <Column key={column._id} column={column} createNewCard={createNewCard}/>
         })}
 
         {/* Add new column */}

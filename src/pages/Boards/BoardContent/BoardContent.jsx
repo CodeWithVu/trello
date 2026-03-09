@@ -17,7 +17,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD'
 }
 
-function BoardContent({ board }) {
+function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
   //Có thể dùng PointerSensor vì nó tương thích cả điện thoại và máy tính nhưng nên tách ra thành mouse và touch để tối ưu trải nghiệm người dùng
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
@@ -197,6 +197,7 @@ function BoardContent({ board }) {
         const newCardIndex = overColumn?.cards?.findIndex(c => c._id === overCardId)
 
         const dndOrderedCards = arrayMove(oldColumnWhenDraggingCard?.cards, oldCardIndex, newCardIndex)
+
         setOrderedColumns(prevColumns => {
         // Clone lại mảng orderedColumn cũ ra một cái mới để xử lý data rồi return - cập nhật lại orderedColumnState mới
           const nextColumns = cloneDeep(prevColumns)
@@ -220,7 +221,11 @@ function BoardContent({ board }) {
       const newColumnIndex = orderedColumns.findIndex(c => c._id === over.id)
 
       const dndOrderedColumns = arrayMove(orderedColumns, oldColumnIndex, newColumnIndex)
-      // Cập nhật state để UI phản ánh thứ tự mới
+
+      // Gọi lê props function moveColumns ở component cha cao nhất(board/_id.jsx)
+      moveColumns(dndOrderedColumns)
+
+      // Cập nhật state để UI phản ánh thứ tự mới tránh delay hoặc flickering giao diện lúc kéo thả cần phải chờ gọi API
       setOrderedColumns(dndOrderedColumns)
     }
 
@@ -283,7 +288,11 @@ function BoardContent({ board }) {
       onDragEnd={handleDragEnd}
     >
       <div className="w-full h-(--board-content-height) bg-[#015FDD] dark:bg-[#34495e] py-2">
-        <ListColumn columns={orderedColumns}/>
+        <ListColumn
+          columns={orderedColumns}
+          createNewColumn={createNewColumn}
+          createNewCard={createNewCard}
+        />
         <DragOverlay dropAnimation={dropAnimation}>
           {(!activeDragItemType) && null}
           {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData}/>}
