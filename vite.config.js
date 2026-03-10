@@ -6,6 +6,10 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Cho phép vite sử dụng process.env, mặc định thì phải dùng import.meta.env
+  define: {
+    'process.env': process.env
+  },
   plugins: [react(), tailwindcss(), eslint(), svgr()],
 
   resolve: {

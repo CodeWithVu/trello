@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
+    "dev": "cross-env BUILD_MODE=dev vite --host",
+    "build": "cross-env BUILD_MODE=production vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -16,6 +16,7 @@
     "@headlessui/react": "^2.2.9",
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.6",
+    "cross-env": "^10.1.0",
     "lodash": "^4.17.23",
     "rc-progress": "^4.0.0",
     "react": "^19.2.0",
