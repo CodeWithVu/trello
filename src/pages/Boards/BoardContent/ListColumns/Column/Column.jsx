@@ -1,6 +1,5 @@
 import Tooltip from '~/components/ui/Tooltip'
 import ListCards from './ListCards/ListCards'
-import { mapOrder } from '~/utils/sorts'
 import Button from '~/components/ui/Button'
 
 import { useSortable } from '@dnd-kit/sortable'
@@ -38,12 +37,13 @@ function Column({ column, createNewCard }) {
     opacity: isDragging ? 0.5 : undefined
   }
 
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  //Card đã dc sắp xếp ở component cha cao nhất board/_id.jsx
+  const orderedCards = column.cards
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
   const [newCardTitle, setNewCardTitle] = useState('')
 
-  const addNewCard = async () => {
+  const addNewCard = () => {
     if (!newCardTitle) {
       toast.error('Please enter card title!', {
         position: 'bottom-right'
@@ -58,7 +58,7 @@ function Column({ column, createNewCard }) {
     }
 
     //GỌi lên props function createNewCard ở component cha cao nhất là (board/_id.jsx)
-    await createNewCard(newCardData)
+    createNewCard(newCardData)
 
     //Đóng trang
     toggleOpenNewCardForm()
