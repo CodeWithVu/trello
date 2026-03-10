@@ -22,7 +22,8 @@ function BoardContent({
   createNewCard,
   moveColumns,
   moveCardInTheSameColumn,
-  moveCardToDiffentColumn
+  moveCardToDiffentColumn,
+  deleteColumnDetails
 }) {
   //Có thể dùng PointerSensor vì nó tương thích cả điện thoại và máy tính nhưng nên tách ra thành mouse và touch để tối ưu trải nghiệm người dùng
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
@@ -322,6 +323,7 @@ function BoardContent({
           columns={orderedColumns}
           createNewColumn={createNewColumn}
           createNewCard={createNewCard}
+          deleteColumnDetails={deleteColumnDetails}
         />
         <DragOverlay dropAnimation={dropAnimation}>
           {(!activeDragItemType) && null}

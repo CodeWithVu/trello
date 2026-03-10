@@ -12,11 +12,12 @@ import { MdAddCard,
   MdOutlineContentCut, MdOutlineContentCopy,
   MdContentPaste, MdDeleteForever,
   MdOutlineArchive, MdDragHandle } from 'react-icons/md'
+import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 
 const COLUMN_HEADER_HEIGHT = '50px'
 const COLUMN_FOOTER_HEIGHT = '70px'
 
-function Column({ column, createNewCard }) {
+function Column({ column, createNewCard, deleteColumnDetails }) {
   const {
     attributes,
     listeners,
@@ -42,6 +43,7 @@ function Column({ column, createNewCard }) {
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
   const [newCardTitle, setNewCardTitle] = useState('')
+  const [isOpenDialog, setIsOpenDialog] = useState(false)
 
   const addNewCard = () => {
     if (!newCardTitle) {
@@ -65,6 +67,11 @@ function Column({ column, createNewCard }) {
     setNewCardTitle('')
   }
 
+
+  const handleDeleteColumn = () => {
+    deleteColumnDetails(column._id)
+    setIsOpenDialog(false)
+  }
   return (
     <div
       ref={setNodeRef}
@@ -93,7 +100,9 @@ function Column({ column, createNewCard }) {
                 className="w-48 origin-top-right rounded-xl border border-white/5 bg-white  p-1 text-sm/6 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
               >
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1 data-focus:bg-[#d5eff5]">
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1 data-focus:bg-[#d5eff5] hover:text-[#0D751B]"
+                    onClick={toggleOpenNewCardForm}
+                  >
                     <MdAddCard />
                     Create new card
                   </button>
@@ -119,19 +128,38 @@ function Column({ column, createNewCard }) {
                 </MenuItem>
                 <MenuSeparator className="my-2 h-px bg-gray-300" />
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1 data-focus:bg-[#d5eff5]">
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1 data-focus:bg-[#d5eff5] hover:text-red-500"
+                    onClick={() => setIsOpenDialog(true)}
+                  >
                     <MdDeleteForever />
-                  Remove this column
+                  Delete this column
                   </button>
                 </MenuItem>
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1 data-focus:bg-[#d5eff5]">
-                    <MdOutlineArchive />
+                  <button
+                    className="group flex w-full items-center gap-2 rounded-lg px-3 py-1 data-focus:bg-[#d5eff5]"
+                  >
+                    <MdOutlineArchive/>
                   Archive this column
                   </button>
                 </MenuItem>
               </MenuItems>
             </Menu>
+
+            {/* Confirm dialog đặt ngoài Menu để tránh lỗi headlessui Fragment */}
+            <Dialog open={isOpenDialog} onClose={() => setIsOpenDialog(false)} className="relative z-50 ">
+              <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                <DialogPanel className="max-w-lg space-y-4 rounded-md bg-white p-12 shadow-2xl ">
+                  <DialogTitle className="font-bold text-red-500 flex items-center justify-center text-xl">Remove this column</DialogTitle>
+                  <Description>This will permanently remove your column and its cards</Description>
+                  <p>Are you sure you want to remove this column? All of your data will be permanently removed.</p>
+                  <div className="flex gap-4 justify-end">
+                    <button onClick={() => setIsOpenDialog(false)} className=" font-bold text-gray-500 hover:opacity-70">Cancel</button>
+                    <button onClick={handleDeleteColumn} className="font-bold p-2 rounded-sm text-red-400 cursor-pointer shadow-lg border border-red-300 hover:opacity-70">Remove</button>
+                  </div>
+                </DialogPanel>
+              </div>
+            </Dialog>
           </div>
         </div>
 

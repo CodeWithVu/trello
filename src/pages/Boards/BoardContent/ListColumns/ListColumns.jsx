@@ -7,7 +7,7 @@ import { MdAddBox } from 'react-icons/md'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 import { AiOutlineClose } from 'react-icons/ai'
 
-function ListColumn({ columns, createNewColumn, createNewCard }) {
+function ListColumn({ columns, createNewColumn, createNewCard, deleteColumnDetails }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
   const [newColumnTitle, setNewColumnTitle] = useState('')
@@ -38,7 +38,12 @@ function ListColumn({ columns, createNewColumn, createNewCard }) {
       [&::-webkit-scrollbar-thumb]:bg-white/50
       [&::-webkit-scrollbar-thumb]:rounded-full">
         {columns?.map((column) => {
-          return <Column key={column._id} column={column} createNewCard={createNewCard}/>
+          return <Column
+            key={column._id}
+            column={column}
+            createNewCard={createNewCard}
+            deleteColumnDetails={deleteColumnDetails}
+          />
         })}
 
         {/* Add new column */}
