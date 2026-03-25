@@ -6,8 +6,16 @@ import { toast } from 'react-toastify'
 import { MdAddBox } from 'react-icons/md'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 import { AiOutlineClose } from 'react-icons/ai'
+import { generatePlaceholderCard } from '~/utils/formatters'
+import { createNewColumnAPI } from '~/apis'
+import { cloneDeep } from 'lodash'
+import { updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
-function ListColumn({ columns, createNewColumn, createNewCard, deleteColumnDetails }) {
+function ListColumn({ columns }) {
+  const dispatch = useDispatch()
+  const board = useSelector(selectCurrentActiveBoard)
+
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
   const [newColumnTitle, setNewColumnTitle] = useState('')
@@ -16,14 +24,30 @@ function ListColumn({ columns, createNewColumn, createNewCard, deleteColumnDetai
     if (!newColumnTitle) {
       toast.error('Please enter column title!')
       return
+
     }
 
     //Gọi API
     const newColumnData = {
       title: newColumnTitle
     }
+    // Function này có nhiệm vụ tạo mới column và làm mới dữ liệu state board
+    const createdColumn = await createNewColumnAPI({
+      ...newColumnData,
+      boardId: board._id
+    })
 
-    await createNewColumn(newColumnData)
+    //Khi tạo column mới chưa có card, cần xử lý vấn đề kéo thả vào một column rỗng
+    createdColumn.cards = [generatePlaceholderCard(createdColumn)]
+    createdColumn.cardOrderIds = [generatePlaceholderCard(createdColumn)._id]
+
+    // Cập nhật state board
+    // const newBoard = { ...board } // shallow copy => dính rule redux là không sửa dữ liệu immutate data
+    const newBoard = cloneDeep(board)
+    newBoard.columns = [...newBoard.columns, createdColumn]
+    newBoard.columnOrderIds = [...newBoard.columnOrderIds, createdColumn._id]
+    dispatch(updateCurrentActiveBoard(newBoard))
+
 
     //Đóng trang
     toggleOpenNewColumnForm()
@@ -41,8 +65,6 @@ function ListColumn({ columns, createNewColumn, createNewCard, deleteColumnDetai
           return <Column
             key={column._id}
             column={column}
-            createNewCard={createNewCard}
-            deleteColumnDetails={deleteColumnDetails}
           />
         })}
 

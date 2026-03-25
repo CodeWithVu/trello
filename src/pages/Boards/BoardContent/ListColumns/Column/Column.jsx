@@ -13,11 +13,19 @@ import { MdAddCard,
   MdContentPaste, MdDeleteForever,
   MdOutlineArchive, MdDragHandle } from 'react-icons/md'
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import {
+  createNewCardAPI,
+  deleteColumnDetailsAPI
+} from '~/apis'
+import { cloneDeep } from 'lodash'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
+
 
 const COLUMN_HEADER_HEIGHT = '50px'
 const COLUMN_FOOTER_HEIGHT = '70px'
 
-function Column({ column, createNewCard, deleteColumnDetails }) {
+function Column({ column }) {
   const {
     attributes,
     listeners,
@@ -45,7 +53,11 @@ function Column({ column, createNewCard, deleteColumnDetails }) {
   const [newCardTitle, setNewCardTitle] = useState('')
   const [isOpenDialog, setIsOpenDialog] = useState(false)
 
-  const addNewCard = () => {
+  const dispatch = useDispatch()
+  const board = useSelector(selectCurrentActiveBoard)
+
+
+  const addNewCard = async () => {
     if (!newCardTitle) {
       toast.error('Please enter card title!', {
         position: 'bottom-right'
@@ -59,8 +71,30 @@ function Column({ column, createNewCard, deleteColumnDetails }) {
       columnId: column._id
     }
 
-    //GỌi lên props function createNewCard ở component cha cao nhất là (board/_id.jsx)
-    createNewCard(newCardData)
+    // Gọi API tạo mới card
+    const createdCard = await createNewCardAPI({
+      ...newCardData,
+      boardId: board._id
+    })
+
+    const newBoard = cloneDeep(board)
+    newBoard.columns = newBoard.columns.map(column => {
+      if (column._id === createdCard.columnId) {
+        if ( column.cards.some(card => card.FE_PlaceholderCard)) {
+          column.cards = [createdCard]
+          column.cardOrderIds = [createdCard._id]
+        } else {
+          return {
+            ...column,
+            cards: [...column.cards, createdCard],
+            cardOrderIds: [...column.cards.map(c => c._id), createdCard._id]
+          }
+        }
+      }
+      return column
+    })
+    // setBoard(newBoard)
+    dispatch(updateCurrentActiveBoard(newBoard))
 
     //Đóng trang
     toggleOpenNewCardForm()
@@ -68,8 +102,16 @@ function Column({ column, createNewCard, deleteColumnDetails }) {
   }
 
 
-  const handleDeleteColumn = () => {
-    deleteColumnDetails(column._id)
+  const handleDeleteColumn = async () => {
+    const newBoard = { ...board }
+    newBoard.columns = newBoard.columns.filter(c => c._id !== column._id)
+    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== column._id)
+    // setBoard(newBoard)
+    dispatch(updateCurrentActiveBoard(newBoard))
+
+    // Gọi API
+    const res = await deleteColumnDetailsAPI(column._id)
+    toast.success(res?.deleteResult || 'Xóa column thành công!')
     setIsOpenDialog(false)
   }
   return (

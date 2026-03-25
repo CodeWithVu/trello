@@ -18,12 +18,11 @@ const ACTIVE_DRAG_ITEM_TYPE = {
 
 function BoardContent({
   board,
-  createNewColumn,
-  createNewCard,
+  // createNewColumn,
+  // createNewCard,
   moveColumns,
   moveCardInTheSameColumn,
-  moveCardToDiffentColumn,
-  deleteColumnDetails
+  moveCardToDiffentColumn
 }) {
   //Có thể dùng PointerSensor vì nó tương thích cả điện thoại và máy tính nhưng nên tách ra thành mouse và touch để tối ưu trải nghiệm người dùng
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
@@ -319,12 +318,7 @@ function BoardContent({
       onDragEnd={handleDragEnd}
     >
       <div className="w-full h-(--board-content-height) bg-[#015FDD] dark:bg-[#34495e] py-2">
-        <ListColumn
-          columns={orderedColumns}
-          createNewColumn={createNewColumn}
-          createNewCard={createNewCard}
-          deleteColumnDetails={deleteColumnDetails}
-        />
+        <ListColumn columns={orderedColumns}/>
         <DragOverlay dropAnimation={dropAnimation}>
           {(!activeDragItemType) && null}
           {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData}/>}
