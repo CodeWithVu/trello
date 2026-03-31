@@ -214,7 +214,7 @@ function Column({ column }) {
           style={{ height: openNewCardForm ? 'auto' : COLUMN_FOOTER_HEIGHT }}>
           {!openNewCardForm
             ? <div className="flex items-center justify-between w-full">
-              <button className="flex items-center gap-2 text-(--color-primary) select-none"
+              <button className="interceptor-loading flex items-center gap-2 text-(--color-primary) select-none"
                 onClick={toggleOpenNewCardForm}>
                 <MdAddCard />
               Add new card
@@ -233,7 +233,7 @@ function Column({ column }) {
                   onChange = {(e) => setNewCardTitle(e.target.value)}
                 />
               </div>
-              <Button className="text-amber-50 bg-[#68B18C] hover:bg-[#0D751B] shadow-lg shrink-0"
+              <Button className="interceptor-loading text-amber-50 bg-[#68B18C] hover:bg-[#0D751B] shadow-lg shrink-0"
                 onClick={addNewCard}
               >Add</Button>
               <AiOutlineClose

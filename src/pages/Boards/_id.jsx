@@ -11,6 +11,7 @@ import { cloneDeep } from 'lodash'
 
 import { fetchBoardDetailsAPI, updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 function Board() {
   const dispatch = useDispatch()
@@ -18,11 +19,13 @@ function Board() {
   // const [board, setBoard] = useState(null)
   const board = useSelector(selectCurrentActiveBoard)
 
+  const { boardId } = useParams()
+
   useEffect(() => {
-    const boardId = '69aee80b5e5150e63541866b'
+    // const boardId = '69aee80b5e5150e63541866b'
     dispatch(fetchBoardDetailsAPI(boardId))
 
-  }, [dispatch])
+  }, [dispatch, boardId])
 
 
   // Func này gọi API và xử lý khi kéo thả column xong
