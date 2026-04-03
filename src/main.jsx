@@ -13,13 +13,20 @@ import { ToastContainer } from 'react-toastify'
 import { Provider } from 'react-redux'
 import { store } from '~/redux/store'
 
+// cấu hình redux-persist
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
+const persistor = persistStore(store)
+
 createRoot(document.getElementById('root')).render(
   <BrowserRouter basename='/'>
     <Provider store={store}>
-      <StrictMode>
-        <App />
-        <ToastContainer position="bottom-left" closeOnClick={true} />
-      </StrictMode>
+      <PersistGate persistor={persistor}>
+        <StrictMode>
+          <App />
+          <ToastContainer position="bottom-left" closeOnClick={true} />
+        </StrictMode>
+      </PersistGate>
     </Provider>
   </BrowserRouter>
 )

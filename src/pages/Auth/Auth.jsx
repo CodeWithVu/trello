@@ -1,14 +1,22 @@
 // TrungQuanDev: https://youtube.com/@trungquandev
-import { useLocation } from 'react-router-dom'
+import { useLocation, Navigate } from 'react-router-dom'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import bgImage from '~/assets/auth/login-register-bg.jpg'
+import { useSelector } from 'react-redux'
+import { selectCurrentUser } from '~/redux/user/userSlice'
 
 function Auth() {
   const location = useLocation()
   // console.log(location)
   const isLogin = location.pathname === '/login'
   const isRegister = location.pathname === '/register'
+
+  const currentUser = useSelector(selectCurrentUser)
+
+  if (currentUser) {
+    return <Navigate to="/" replace={true} />
+  }
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-start bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url("${bgImage}")`, boxShadow: 'inset 0 0 0 2000px rgba(0, 0, 0, 0.2)' }}>

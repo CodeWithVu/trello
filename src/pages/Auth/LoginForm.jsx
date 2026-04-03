@@ -1,16 +1,31 @@
 // TrungQuanDev: https://youtube.com/@trungquandev
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { FaLock } from 'react-icons/fa'
 import TrelloIcon from '~/assets/trello.svg?react'
 import { useForm } from 'react-hook-form'
 import { EMAIL_RULE, PASSWORD_RULE, FIELD_REQUIRED_MESSAGE, PASSWORD_RULE_MESSAGE, EMAIL_RULE_MESSAGE } from '~/utils/validators'
 import FieldErrorAlert from '~/components/Form/FieldErrorAlert'
+import { loginUserAPI } from '~/redux/user/userSlice'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
 
 function LoginForm() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const { register, handleSubmit, formState: { errors } } = useForm()
+  let [searchParams] = useSearchParams()
+  const registeredEmail = searchParams.get('registeredEmail')
+  const verifiedEmail = searchParams.get('verifiedEmail')
+
   const submitLogin = (data) => {
-    // eslint-disable-next-line no-console
-    console.log('submitdata', data)
+    const { email, password } = data
+    toast.promise(
+      dispatch(loginUserAPI({ email, password })),
+      { pending: 'Logging in...' }
+    ).then(res => {
+      if (!res.error) navigate('/')
+    })
   }
 
 
@@ -34,18 +49,22 @@ function LoginForm() {
         </div>
 
         {/* Alerts */}
-        {/* <div className="mt-4 flex justify-center flex-col px-4">
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        <div className="mt-4 flex justify-center flex-col px-4">
+          { verifiedEmail &&
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
             Your email&nbsp;
-            <span className="font-bold hover:text-yellow-400">trungquandev@gmail.com</span>
+          <span className="font-bold hover:text-yellow-400">{verifiedEmail}</span>
             &nbsp;has been verified.<br />Now you can login to enjoy our services! Have a good day!
-          </div>
+        </div>
+          }
+          {registeredEmail &&
           <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded">
             An email has been sent to&nbsp;
-            <span className="font-bold hover:text-yellow-400">trungquandev@gmail.com</span>
+            <span className="font-bold hover:text-yellow-400">{registeredEmail}</span>
             <br />Please check and verify your account before logging in!
           </div>
-        </div> */}
+          }
+        </div>
 
         {/* Form Fields */}
         <div className="px-4 pb-4">
