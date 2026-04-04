@@ -43,10 +43,6 @@ function LoginForm() {
           </div>
         </div>
 
-        {/* Author */}
-        <div className="mt-4 flex justify-center text-gray-500">
-          Author: TrungQuanDev
-        </div>
 
         {/* Alerts */}
         <div className="mt-4 flex justify-center flex-col px-4">
@@ -113,7 +109,6 @@ function LoginForm() {
 
         {/* Register Link */}
         <div className="px-4 pb-4 text-center">
-          <p className="text-gray-700">New to Trello MERN Stack Advanced?</p>
           <Link to="/register" className="no-underline">
             <p className="text-blue-600 hover:text-yellow-400 font-semibold">Create account!</p>
           </Link>
