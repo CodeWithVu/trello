@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectCurrentUser, logoutUserAPI } from '~/redux/user/userSlice'
 import { useState } from 'react'
 import { Description, Dialog, DialogPanel } from '@headlessui/react'
+import { Link } from 'react-router-dom'
 
 
 function Profile() {
@@ -25,17 +26,17 @@ function Profile() {
           modal={false}
           className="absolute -right-2 top-full mt-1  w-32 origin-top-right rounded-xl border border-white/5 bg-white p-1 text-sm/6 text-black transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0">
           <MenuSection>
-            <MenuItem>
-              <a className="flex data-focus:bg-blue-100 p-2 gap-2 items-center rounded-md" href="/profile">
-                <img src={currentUser?.avatar} className="rounded-full w-5 h-5 object-fit"/>
+            <MenuItem className="m-0 w-full flex p-0 items-center justify-center ">
+              <Link className="flex w-full items-center justify-center gap-2 rounded-md p-2 data-focus:bg-blue-100" to="/settings/account">
+                <img src={currentUser?.avatar} className="h-5 w-5 rounded-full object-cover"/>
                 Profile
-              </a>
+              </Link>
             </MenuItem>
-            <MenuItem className="py-1">
-              <a className="data-focus:bg-blue-100 p-2 gap-2 flex items-center rounded-md" href="/notifications">
+            <MenuItem className="m-0 w-full flex p-0 items-center justify-center">
+              <Link className="flex w-full items-center gap-2 rounded-md p-2 data-focus:bg-blue-100" to="/notifications">
                 <MdOutlineSettings />
                 Setting
-              </a>
+              </Link>
             </MenuItem>
           </MenuSection>
           <MenuSeparator className="my-2 h-px bg-gray-300" />

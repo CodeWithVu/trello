@@ -26,7 +26,6 @@ function Board() {
   useEffect(() => {
     // const boardId = '69aee80b5e5150e63541866b'
     dispatch(fetchBoardDetailsAPI(boardId))
-
   }, [dispatch, boardId])
 
 
@@ -91,7 +90,6 @@ function Board() {
       nextCardOrderIds
     })
   }
-
 
   if (!board) {
     return (

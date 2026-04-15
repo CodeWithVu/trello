@@ -14,6 +14,8 @@ import { BiSolidAddToQueue } from 'react-icons/bi'
 import { IoMdHelpCircleOutline } from 'react-icons/io'
 import { IoSearchSharp } from 'react-icons/io5'
 import { AiOutlineClose } from 'react-icons/ai'
+import { Link } from 'react-router-dom'
+import { PiDotsNineBold } from 'react-icons/pi'
 
 function AppBar() {
   const [searchValue, setSearchValue] = useState('')
@@ -29,10 +31,13 @@ function AppBar() {
     dark:[&::-webkit-scrollbar-track]:bg-neutral-700
     dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
       <div className="px-4 gap-4 flex items-center text-white ">
-        <div className="gap-1 flex items-center">
-          <TrelloLogo className="w-6 h-6" />
-          <span className="text-base font-bold">Trello</span>
-        </div>
+        <Link to="/boards"><PiDotsNineBold className="text-xl font-bold"/></Link>
+        <Link to="/">
+          <div className="gap-1 flex items-center">
+            <TrelloLogo className="w-6 h-6" />
+            <span className="text-base font-bold">Trello</span>
+          </div>
+        </Link>
         <div className="hidden sm:flex gap-4 ">
           <Workspace />
           <Recent />

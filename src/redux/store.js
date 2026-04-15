@@ -8,7 +8,7 @@ import storage from 'redux-persist/lib/storage'
 const rootPersistConfig = {
   key: 'root',
   storage: storage,
-  whitelist: ['user', 'activeBoard']
+  whitelist: ['user'] // chỉ nên giữ lại user/auth
 }
 
 const reducers = combineReducers({

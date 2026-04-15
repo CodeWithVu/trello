@@ -19,6 +19,7 @@
     "axios": "^1.13.6",
     "cross-env": "^10.1.0",
     "lodash": "^4.17.23",
+    "randomcolor": "^0.6.2",
     "rc-progress": "^4.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

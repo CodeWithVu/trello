@@ -15,12 +15,13 @@ import { MdAddCard,
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import {
   createNewCardAPI,
-  deleteColumnDetailsAPI
+  deleteColumnDetailsAPI,
+  updateColumnDetailsAPI
 } from '~/apis'
 import { cloneDeep } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
-
+import ToggleFocusInput from '~/components/Form/ToggleFocusInput'
 
 const COLUMN_HEADER_HEIGHT = '50px'
 const COLUMN_FOOTER_HEIGHT = '70px'
@@ -114,6 +115,19 @@ function Column({ column }) {
     toast.success(res?.deleteResult || 'Xóa column thành công!')
     setIsOpenDialog(false)
   }
+
+  const onUpdateColumnTitle = (newTitle) => {
+    // Gọi api update column và xử lý dữ liệu board trong redux
+    updateColumnDetailsAPI(column._id, { title: newTitle }).then(() => {
+      const newBoard = cloneDeep(board)
+      const columnToUpdate = newBoard.columns.find(c => column._id === c._id)
+      if (columnToUpdate) {
+        columnToUpdate.title = newTitle
+      }
+      dispatch(updateCurrentActiveBoard(newBoard))
+    })
+  }
+
   return (
     <div
       ref={setNodeRef}
@@ -129,7 +143,12 @@ function Column({ column }) {
           className="shrink-0 px-4 py-3 flex items-center justify-between"
           style={{ height: COLUMN_HEADER_HEIGHT }}
         >
-          <span className="font-semibold text-lg">{column?.title}</span>
+          {/* <span className="font-semibold text-lg">{column?.title}</span> */}
+          <ToggleFocusInput
+            value={column?.title}
+            onChangedValue={onUpdateColumnTitle}
+            data-no-dnd="true"
+          />
           <div>
             <Menu >
               <MenuButton className="inline-flex items-center pr-0 py-1.5 text-sm/6  cursor-pointer focus:not-data-focus:outline-none">
