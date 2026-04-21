@@ -14,12 +14,15 @@ import { cloneDeep } from 'lodash'
 import { fetchBoardDetailsAPI, updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import ActiveCard from '~/components/Modal/ActiveCard/ActiveCard'
+import { selectCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
 
 function Board() {
   const dispatch = useDispatch()
   //Không dùng State nữa vì dùng state của redux
   // const [board, setBoard] = useState(null)
   const board = useSelector(selectCurrentActiveBoard)
+  const activeCard = useSelector(selectCurrentActiveCard)
 
   const { boardId } = useParams()
 
@@ -100,6 +103,12 @@ function Board() {
 
   return (
     <div className="h-screen flow-root">
+      {/* Check đóng mở dựa theo điều kiện có tồn tại data activeCard lưu trong Redux
+      hay không thì mới render. Mỗi thời điểm chỉ tồn tại một cai Modal card active */}
+      {activeCard && <ActiveCard />}
+
+      {/* Các thành phần còn lại của board detail */}
+
       <AppBar />
       <BoardBar board={board} />
       <BoardContent

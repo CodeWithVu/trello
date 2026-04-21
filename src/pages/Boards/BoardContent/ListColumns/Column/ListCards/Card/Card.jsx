@@ -8,6 +8,9 @@ import { BiSolidCommentDetail } from 'react-icons/bi'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
+import { updateCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
+import { useDispatch } from 'react-redux'
+
 function Card({ card }) {
   const {
     attributes,
@@ -27,6 +30,12 @@ function Card({ card }) {
     transition,
     opacity: isDragging ? 0.5 : undefined
   }
+  const dispatch = useDispatch()
+
+  const setActiveCard = () => {
+    // cập nhật data cho activeCard trong redux
+    dispatch(updateCurrentActiveCard(card))
+  }
 
   return (
     <div
@@ -34,7 +43,9 @@ function Card({ card }) {
       style={dndKitCardStyle}
       {...attributes}
       {...listeners}>
-      <MuiCard className={`${card?.FE_PlaceholderCard ? 'hidden' : 'block'} border border-transparent hover:border-(--color-primary) dark:hover:border-(--color-primary-dark)`}
+      <MuiCard
+        onClick={setActiveCard}
+        className={`${card?.FE_PlaceholderCard ? 'hidden' : 'block'} border border-transparent hover:border-(--color-primary) dark:hover:border-(--color-primary-dark)`}
       >
         {card?.cover && <CardMedia image={card?.cover}/>}
         <CardContent>
