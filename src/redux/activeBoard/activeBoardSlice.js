@@ -5,6 +5,12 @@ import { mapOrder } from '~/utils/sorts'
 import { isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatters'
 
+const mergeBoardUsers = (board) => {
+  const owners = board?.owners || []
+  const members = board?.members || []
+  board.FE_allUsers = owners.concat(members)
+}
+
 // Khỏi tạo giá trị của một slice trong redux
 const initialState= {
   currentActiveBoard: null
@@ -34,8 +40,29 @@ export const activeBoardSlice = createSlice({
 
       //Xử lý dữ liệu nếu cần thiết
 
+      //Thanh viên trong board sẽ được gộp lại từ 2 mảng owners và members
+      mergeBoardUsers(board)
+
       //update lại dữ liệu của active board
       state.currentActiveBoard = board
+    },
+    updateCardInBoard: (state, action) => {
+      // update nested data
+      const incomingCard = action.payload
+
+      // Tìm dần từ board > column > card
+      const column = state.currentActiveBoard.columns.find(i => i._id === incomingCard.columnId)
+      if (column) {
+        const card = column.cards.find(i => i._id === incomingCard._id)
+        if (card) {
+          card.title = incomingCard.title
+          // Dùng Object.keys để lấy toàn bộ các properties keys của incomingCard về một array rồi forEach ra
+          // Sau đó tùy vào trường hợp cần thì kiểm tra thêm còn không thì cập nhật ngược lại giá trị vào card luôn
+          Object.keys(incomingCard).forEach(key => {
+            card[key] = incomingCard[key]
+          })
+        }
+      }
     }
   },
   //Xử lý dữ liệu bất đồng bộ
@@ -56,6 +83,10 @@ export const activeBoardSlice = createSlice({
           column.cards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
         }
       })
+
+      // F5 vẫn cần có dữ liệu users để render avatar group ở BoardBar.
+      mergeBoardUsers(board)
+
       //update lại dữ liệu của active board
       state.currentActiveBoard = board
     })
@@ -63,7 +94,7 @@ export const activeBoardSlice = createSlice({
 })
 // ASction là nơi dành cho các components bên dưới gọi bằng dispatch() tới nó để cập nhật lại dữ liệu
 // thông qua reducer
-export const { updateCurrentActiveBoard } = activeBoardSlice.actions
+export const { updateCurrentActiveBoard, updateCardInBoard } = activeBoardSlice.actions
 
 //Selectors: là nơi cho các components bên dưới gọi bằng hook selector() để lấy dữ liệu từ trong kho redux
 export const selectCurrentActiveBoard = (state) => {

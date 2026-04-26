@@ -8,19 +8,21 @@ function ToggleFocusInput({ value, onChangedValue, inputFontSize = '16px', ...pr
 
   // Blur là khi chúng ta không còn Focus vào phần tử nữa thì sẽ trigger hành động ở đây.
   const triggerBlur = () => {
+    const trimmedValue = (inputValue ?? '').trim()
+
     // Support Trim cái dữ liệu State inputValue cho đẹp luôn sau khi blur ra ngoài
-    setInputValue(inputValue.trim())
+    setInputValue(trimmedValue)
 
     // Nếu giá trị không có gì thay đổi hoặc Nếu user xóa hết nội dung thì set lại giá trị gốc ban đầu theo value từ props và return luôn không làm gì thêm
-    if (!inputValue || inputValue.trim() === value) {
-      setInputValue(value)
+    if (!trimmedValue || trimmedValue === (value ?? '')) {
+      setInputValue(value ?? '')
       return
     }
 
     // console.log('value: ', value)
     // console.log('inputValue: ', inputValue)
     // Khi giá trị có thay đổi ok thì gọi lên func ở Props cha để xử lý
-    onChangedValue(inputValue)
+    onChangedValue(trimmedValue)
   }
 
   return (

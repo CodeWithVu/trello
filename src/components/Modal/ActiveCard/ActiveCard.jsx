@@ -34,6 +34,8 @@ import {
   updateCurrentActiveCard
 } from '~/redux/activeCard/activeCardSlice'
 import { updateCardDetailsAPI } from '~/apis'
+import { updateCardInBoard } from '~/redux/activeBoard/activeBoardSlice'
+
 
 const sidebarItemClassName = 'flex cursor-pointer items-center gap-1.5 rounded px-2.5 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-300 dark:bg-[#2f3542] dark:text-sky-300 dark:hover:bg-[#33485D]'
 const sidebarItemActiveClassName = 'hover:bg-[#e9f2ff] hover:text-[#0c66e4] dark:hover:bg-[#90caf9] dark:hover:text-[#000000de]'
@@ -57,6 +59,7 @@ function ActiveCard() {
     dispatch(updateCurrentActiveCard(updatedCard))
 
     //B2: cập nhật lại bản ghi card trong activeBoard (nested Data)
+    dispatch(updateCardInBoard(updatedCard))
 
     return updatedCard
   }
@@ -67,6 +70,11 @@ function ActiveCard() {
     callApiUpdateCard({
       title: newTitle.trim()
     })
+  }
+
+  const onUpdateCardDescription = (newDescription) => {
+    // Gọi API...
+    callApiUpdateCard({ title: newDescription })
   }
 
   const onUploadCardCover = (event) => {
@@ -80,6 +88,9 @@ function ActiveCard() {
     reqData.append('cardCover', event.target?.files[0])
 
     // Gọi API...
+    toast.promise(
+      callApiUpdateCard(reqData).finally(() => event.target.value = ''),
+      { pending: 'Updating...' })
   }
 
   return (
@@ -137,7 +148,10 @@ function ActiveCard() {
                   </div>
 
                   {/* Feature 03: Xử lý mô tả của Card */}
-                  <CardDescriptionMdEditor />
+                  <CardDescriptionMdEditor
+                    cardDescriptionProp={activeCard?.description}
+                    handleUpdateCardDescription={onUpdateCardDescription}
+                  />
                 </div>
 
                 <div className="mb-3">

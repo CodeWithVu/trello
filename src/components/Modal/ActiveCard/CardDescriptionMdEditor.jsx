@@ -4,32 +4,32 @@ import rehypeSanitize from 'rehype-sanitize'
 import { MdEditNote } from 'react-icons/md'
 import { useDarkMode } from '~/hooks/useDarkMode'
 
-const markdownValueExample = `
-  *\`Markdown Content Example:\`*
+// const markdownValueExample = `
+//   *\`Markdown Content Example:\`*
 
-  **Hello world | TrungQuanDev - Một Lập Trình Viên | Trello MERN Stack Advanced**
-  [![](https://avatars.githubusercontent.com/u/14128099?v=4&s=80)](https://avatars.githubusercontent.com/u/14128099?v=4)
-  \`\`\`javascript
-  import React from "react"
-  import ReactDOM from "react-dom"
-  import MDEditor from '@uiw/react-md-editor'
-  \`\`\`
-`
+//   **Hello world | TrungQuanDev - Một Lập Trình Viên | Trello MERN Stack Advanced**
+//   [![](https://avatars.githubusercontent.com/u/14128099?v=4&s=80)](https://avatars.githubusercontent.com/u/14128099?v=4)
+//   \`\`\`javascript
+//   import React from "react"
+//   import ReactDOM from "react-dom"
+//   import MDEditor from '@uiw/react-md-editor'
+//   \`\`\`
+// `
 /**
  * Vài ví dụ Markdown từ lib
  * https://codesandbox.io/embed/markdown-editor-for-react-izdd6?fontsize=14&hidenavigation=1&theme=dark
  */
-function CardDescriptionMdEditor() {
+function CardDescriptionMdEditor({ cardDescriptionProp, handleUpdateCardDesctiption }) {
   const [darkMode] = useDarkMode()
 
   // State xử lý chế độ Edit và chế độ View
   const [markdownEditMode, setMarkdownEditMode] = useState(false)
   // State xử lý giá trị markdown khi chỉnh sửa
-  const [cardDescription, setCardDescription] = useState(markdownValueExample)
+  const [cardDescription, setCardDescription] = useState(cardDescriptionProp)
 
   const updateCardDescription = () => {
     setMarkdownEditMode(false)
-    console.log('cardDescription: ', cardDescription)
+    // console.log('cardDescription: ', cardDescription)
   }
 
   return (

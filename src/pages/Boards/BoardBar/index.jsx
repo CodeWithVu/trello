@@ -1,7 +1,6 @@
 import Button from '~/components/ui/Button'
 import { Chip } from '~/components/ui/Chip'
 // import AvatarGroup from '~/components/ui/AvatarGroup'
-import images from '~/assets'
 import Tooltip from '~/components/ui/Tooltip'
 import { capitalizeFirstLetter } from '~/utils/formatters'
 // import { fetchBoardDetailsAPI } from '~/apis'
@@ -89,7 +88,7 @@ function BoardBar({ board }) {
             <img src={images.avatarCherry} alt="ảnh avatar" className="border-2 border-white w-8 h-8 rounded-full object-cover" />
           </Tooltip>
         </AvatarGroup> */}
-        <BoardUserGroup />
+        <BoardUserGroup boardUsers={board?.FE_allUsers}/>
       </div>
     </div >
   )
