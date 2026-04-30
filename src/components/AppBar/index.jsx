@@ -9,13 +9,13 @@ import Tooltip from '~/components/ui/Tooltip'
 import Button from '~/components/ui/Button'
 
 import { useState } from 'react'
-import { FaRegBell } from 'react-icons/fa6'
 import { BiSolidAddToQueue } from 'react-icons/bi'
 import { IoMdHelpCircleOutline } from 'react-icons/io'
 import { IoSearchSharp } from 'react-icons/io5'
 import { AiOutlineClose } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { PiDotsNineBold } from 'react-icons/pi'
+import Notification from './Notifications/Notifications'
 
 function AppBar() {
   const [searchValue, setSearchValue] = useState('')
@@ -28,8 +28,8 @@ function AppBar() {
     [&::-webkit-scrollbar-track]:bg-gray-100
     [&::-webkit-scrollbar-thumb]:bg-gray-300
     [&::-webkit-scrollbar-thumb]:rounded-md
-    dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-    dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+    dark:[&::-webkit-scrollbar-track]:bg-neutral-300
+    dark:[&::-webkit-scrollbar-thumb]:bg-neutral-400">
       <div className="px-4 gap-4 flex items-center text-white ">
         <Link to="/boards"><PiDotsNineBold className="text-xl font-bold"/></Link>
         <Link to="/">
@@ -66,9 +66,8 @@ function AppBar() {
           </button>
         </div>
         <ModeSelect />
-        <Tooltip content="Notification">
-          <FaRegBell className="text-xl dark:text-amber-50 text-white" />
-        </Tooltip>
+        {/* Xử lý hiển thị thông báo notification */}
+        <Notification />
 
         <Tooltip content="Need help?" contentClassName="w-20">
           <IoMdHelpCircleOutline className="text-xl dark:text-amber-50 text-white" />

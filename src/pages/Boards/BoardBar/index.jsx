@@ -10,7 +10,7 @@ import { MdAddToDrive, MdFilterList } from 'react-icons/md'
 import { TbAutomation } from 'react-icons/tb'
 import { MdOutlinePersonAddAlt1 } from 'react-icons/md'
 import BoardUserGroup from './BoardUserGroup'
-
+import InviteBoardUser from './InviteBoardUser'
 
 function BoardBar({ board }) {
   return (
@@ -61,33 +61,8 @@ function BoardBar({ board }) {
       </div>
 
       <div className="mx-4 gap-4 flex items-center">
-        <Button variant="primary" className="flex items-center gap-1 text-white border-white hover:bg-[#1558BC] dark:hover:bg-[#2C3E50] hover:border-2">
-          <MdOutlinePersonAddAlt1 className="text-md "/>
-          Invite
-        </Button>
-        {/* <AvatarGroup max={5}>
-          <Tooltip content="Avatar">
-            <img src={images.avatarCherry} alt="ảnh avatar" className="border-2 border-white w-8 h-8 rounded-full object-cover" />
-          </Tooltip>
-          <Tooltip content="Avatar">
-            <img src={images.avatarCherry} alt="ảnh avatar" className="border-2 border-white w-8 h-8 rounded-full object-cover" />
-          </Tooltip>
-          <Tooltip content="Avatar">
-            <img src={images.avatarCherry} alt="ảnh avatar" className="border-2 border-white w-8 h-8 rounded-full object-cover" />
-          </Tooltip>
-          <Tooltip content="Avatar">
-            <img src={images.avatarCherry} alt="ảnh avatar" className="border-2 border-white w-8 h-8 rounded-full object-cover" />
-          </Tooltip>
-          <Tooltip content="Avatar">
-            <img src={images.avatarCherry} alt="ảnh avatar" className="border-2 border-white w-8 h-8 rounded-full object-cover" />
-          </Tooltip>
-          <Tooltip content="Avatar">
-            <img src={images.avatarCherry} alt="ảnh avatar" className="border-2 border-white w-8 h-8 rounded-full object-cover" />
-          </Tooltip>
-          <Tooltip content="Avatar">
-            <img src={images.avatarCherry} alt="ảnh avatar" className="border-2 border-white w-8 h-8 rounded-full object-cover" />
-          </Tooltip>
-        </AvatarGroup> */}
+        {/* Xử lý mời user vào làm thành viên của board */}
+        <InviteBoardUser boardId={board._id}/>
         <BoardUserGroup boardUsers={board?.FE_allUsers}/>
       </div>
     </div >

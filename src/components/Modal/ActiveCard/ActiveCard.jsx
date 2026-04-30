@@ -28,10 +28,12 @@ import CardUserGroup from './CardUserGroup'
 import CardDescriptionMdEditor from './CardDescriptionMdEditor'
 import CardActivitySection from './CardActivitySection'
 import { useDispatch, useSelector } from 'react-redux'
+import { selectCurrentUser } from '~/redux/user/userSlice'
 import {
   selectCurrentActiveCard,
   clearCurrentActiveCard,
-  updateCurrentActiveCard
+  updateCurrentActiveCard,
+  selectIsShowModalActiveCard
 } from '~/redux/activeCard/activeCardSlice'
 import { updateCardDetailsAPI } from '~/apis'
 import { updateCardInBoard } from '~/redux/activeBoard/activeBoardSlice'
@@ -43,6 +45,8 @@ const sidebarItemActiveClassName = 'hover:bg-[#e9f2ff] hover:text-[#0c66e4] dark
 function ActiveCard() {
   const dispatch = useDispatch()
   const activeCard = useSelector(selectCurrentActiveCard)
+  const isShowModalActiveCard = useSelector(selectIsShowModalActiveCard)
+  const currentUser = useSelector(selectCurrentUser)
 
   // dùng biến check bên board/_id.jsx
   // const [isOpen, setIsOpen] = useState(true)
@@ -53,7 +57,13 @@ function ActiveCard() {
 
   // Function dùng dung cho các trường hợp updateCardTitle, desciption, comment,...
   const callApiUpdateCard = async (updateData) => {
-    const updatedCard = await updateCardDetailsAPI(activeCard._id, updateData)
+    let updatedCard = await updateCardDetailsAPI(activeCard._id, updateData)
+
+    // Some server model methods (findOneAndUpdate) return a wrapper like { value: { ... } }
+    // Normalize to the actual card document when needed.
+    if (updatedCard && typeof updatedCard === 'object' && updatedCard.value) {
+      updatedCard = updatedCard.value
+    }
 
     //B1: cập nhật lại card đang active trong modal hiển thị
     dispatch(updateCurrentActiveCard(updatedCard))
@@ -93,11 +103,29 @@ function ActiveCard() {
       { pending: 'Updating...' })
   }
 
+  const onAddCardComment = async (commentToAdd) => {
+    if (!activeCard) return
+
+    const fullComment = {
+      userAvatar: commentToAdd.userAvatar || currentUser?.avatar,
+      userDisplayName: commentToAdd.userDisplayName || currentUser?.displayName,
+      content: commentToAdd.content
+    }
+
+    const newComments = [...(activeCard.comments || []), fullComment]
+
+    // Show toast and update card via API
+    return toast.promise(
+      callApiUpdateCard({ comments: newComments }),
+      { pending: 'Posting comment...', success: 'Comment added', error: 'Failed to add comment' }
+    )
+  }
+
   return (
     <Dialog
       as="div"
       className="relative z-50"
-      open={true}
+      open={isShowModalActiveCard}
       onClose={handleCloseModal}
     >
       <div className="fixed inset-0 overflow-y-auto px-4 py-8 sm:px-6">
@@ -161,7 +189,10 @@ function ActiveCard() {
                   </div>
 
                   {/* Feature 04: Xử lý các hành động, ví dụ comment vào Card */}
-                  <CardActivitySection />
+                  <CardActivitySection
+                    cardComments={activeCard?.comments}
+                    onAddCardComment={onAddCardComment}
+                  />
                 </div>
               </div>
 
