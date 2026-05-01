@@ -37,6 +37,7 @@ import {
 } from '~/redux/activeCard/activeCardSlice'
 import { updateCardDetailsAPI } from '~/apis'
 import { updateCardInBoard } from '~/redux/activeBoard/activeBoardSlice'
+import { CARD_MEMBERS_ACTIONS } from '~/utils/constants'
 
 
 const sidebarItemClassName = 'flex cursor-pointer items-center gap-1.5 rounded px-2.5 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-300 dark:bg-[#2f3542] dark:text-sky-300 dark:hover:bg-[#33485D]'
@@ -75,7 +76,7 @@ function ActiveCard() {
   }
 
   const onUpdateCardTitle = (newTitle) => {
-    console.log(newTitle.trim())
+    // console.log(newTitle.trim())
     // Gọi API...
     callApiUpdateCard({
       title: newTitle.trim()
@@ -88,7 +89,7 @@ function ActiveCard() {
   }
 
   const onUploadCardCover = (event) => {
-    console.log(event.target?.files[0])
+    // console.log(event.target?.files[0])
     const error = singleFileValidator(event.target?.files[0])
     if (error) {
       toast.error(error)
@@ -119,6 +120,10 @@ function ActiveCard() {
       callApiUpdateCard({ comments: newComments }),
       { pending: 'Posting comment...', success: 'Comment added', error: 'Failed to add comment' }
     )
+  }
+
+  const onUpdateCardMembers = (incomingMemberInfo) => {
+    callApiUpdateCard({ incomingMemberInfo })
   }
 
   return (
@@ -166,7 +171,10 @@ function ActiveCard() {
                   <p className="mb-1 font-semibold text-blue-600 dark:text-sky-300">Members</p>
 
                   {/* Feature 02: Xử lý các thành viên của Card */}
-                  <CardUserGroup />
+                  <CardUserGroup
+                    cardMemberIds={activeCard?.memberIds}
+                    onUpdateCardMembers={onUpdateCardMembers}
+                  />
                 </div>
 
                 <div className="mb-3">
@@ -201,10 +209,22 @@ function ActiveCard() {
                 <p className="mb-1 font-semibold text-blue-600 dark:text-sky-300">Add To Card</p>
                 <div className="flex flex-col gap-2">
                   {/* Feature 05: Xử lý hành động bản thân user tự join vào card */}
-                  <button type="button" className={`${sidebarItemClassName} ${sidebarItemActiveClassName}`}>
+                  {/* Nếu user hiện tại đang đăng nhập chưa thuộc mảng memberIds của card thì mới hiện nút join ra
+                    Khi click vào join thì hành động luôn là add
+                    */}
+                  {!activeCard?.memberIds?.includes(currentUser._id) &&
+                  <button
+                    type="button"
+                    className={`${sidebarItemClassName}${sidebarItemActiveClassName}`}
+                    onClick={() => onUpdateCardMembers({
+                      userId: currentUser._id,
+                      action: CARD_MEMBERS_ACTIONS.ADD
+                    })}
+                  >
                     <MdPersonOutline className="h-4 w-4" />
                     Join
                   </button>
+                  }
                   {/* Feature 06: Xử lý hành động cập nhật ảnh Cover của Card */}
                   <label className={`${sidebarItemClassName} ${sidebarItemActiveClassName}`}>
                     <MdImage className="h-4 w-4" />

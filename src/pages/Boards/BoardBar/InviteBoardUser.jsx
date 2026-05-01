@@ -5,7 +5,7 @@ import { EMAIL_RULE, FIELD_REQUIRED_MESSAGE, EMAIL_RULE_MESSAGE } from '~/utils/
 import FieldErrorAlert from '~/components/Form/FieldErrorAlert'
 import Tooltip from '~/components/ui/Tooltip'
 import { inviteUserToBoardAPI } from '~/apis'
-import { socketIoInstance } from '~/main'
+import { socketIoInstance } from '~/socketClient'
 
 function InviteBoardUser({ boardId }) {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm()

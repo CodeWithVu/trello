@@ -1,18 +1,40 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { MdAdd, MdCheckCircle } from 'react-icons/md'
+import { useSelector } from 'react-redux'
 import Tooltip from '~/components/ui/Tooltip'
+import { selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
+import { CARD_MEMBERS_ACTIONS } from '~/utils/constants'
 
-function CardUserGroup({ cardMemberIds = [] }) {
-  // Lưu ý ở đây chúng ta không dùng Component AvatarGroup của MUI bởi nó không hỗ trợ tốt trong việc chúng ta cần custom & trigger xử lý phần tử tính toán cuối, đơn giản là cứ dùng Box và CSS - Style đám Avatar cho chuẩn kết hợp tính toán một chút thôi.
+function CardUserGroup({ cardMemberIds = [], onUpdateCardMembers }) {
+  // lấy những thông tin users trong board
+  const board = useSelector(selectCurrentActiveBoard)
+
+  // Thành viên trong card sẽ phải là tập con của thành viên trong board
+  // vì thế dựa vào board.FE_allUsers và card.memberIds rồi chúng ta tạo 1 mảng FE_cardMembers chứa đủ thông tin của user
+  // để hiển thị ra ngoài giao diện, bỏi mặc định trong card chỉ lưu đám Id của user
+  const FE_cardMembers = board?.FE_allUsers?.filter(user => cardMemberIds.includes(user._id))
+
+
+  const handleUpdateCardMembers = (user) => {
+    // console.log(user)
+    // Tạo một biến incomingUserInfo để gửi cho be với 2 thông tin chính là userId và action là thêm vào card hoặc xóa khỏi card
+    const incomingUserInfo = {
+      userId: user._id,
+      action: cardMemberIds.includes(user._id) ? CARD_MEMBERS_ACTIONS.REMOVE : CARD_MEMBERS_ACTIONS.ADD
+    }
+    // console.log('incomingMemberInfo', incomingUserInfo)
+    onUpdateCardMembers(incomingUserInfo)
+  }
+
   return (
     <div className="flex flex-wrap gap-1">
       {/* Hiển thị các user là thành viên của card */}
-      {[...Array(8)].map((_, index) =>
-        <Tooltip content="trungquandev" key={index}>
+      {FE_cardMembers.map((user, index) =>
+        <Tooltip content={user.displayName} key={index}>
           <img
             className="h-8.5 w-8.5 cursor-pointer rounded-full object-cover"
-            alt="trungquandev"
-            src="https://trungquandev.com/wp-content/uploads/2019/06/trungquandev-cat-avatar.png"
+            alt="avatar"
+            src={user.avatar}
           />
         </Tooltip>
       )}
@@ -30,15 +52,15 @@ function CardUserGroup({ cardMemberIds = [] }) {
           transition
           className="absolute left-0 top-full z-20 mt-2 flex w-65 flex-wrap gap-1.5 rounded-lg border border-slate-200 bg-white p-2.5 shadow-xl transition duration-200 ease-out data-closed:-translate-y-1 data-closed:opacity-0 dark:border-slate-700 dark:bg-[#1A2027]"
         >
-          {[...Array(16)].map((_, index) =>
-            <Tooltip content="trungquandev" key={index}>
-              <button type="button" className="relative cursor-pointer">
+          {board.FE_allUsers.map((user, index) =>
+            <Tooltip content={user.displayName} key={index}>
+              <button type="button" className="relative cursor-pointer" onClick={() => handleUpdateCardMembers(user)}>
                 <img
                   className="h-8.5 w-8.5 rounded-full object-cover"
-                  alt="trungquandev"
-                  src="https://trungquandev.com/wp-content/uploads/2019/06/trungquandev-cat-avatar.png"
+                  alt={FE_cardMembers}
+                  src={user.avatar}
                 />
-                <MdCheckCircle className="absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full bg-white text-[#27ae60]" />
+                {cardMemberIds.includes(user._id) ? <MdCheckCircle className="absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full bg-white text-[#27ae60]" /> : null}
               </button>
             </Tooltip>
           )}

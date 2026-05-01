@@ -11,11 +11,10 @@ import Button from '~/components/ui/Button'
 import { useState } from 'react'
 import { BiSolidAddToQueue } from 'react-icons/bi'
 import { IoMdHelpCircleOutline } from 'react-icons/io'
-import { IoSearchSharp } from 'react-icons/io5'
-import { AiOutlineClose } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { PiDotsNineBold } from 'react-icons/pi'
 import Notification from './Notifications/Notifications'
+import AutoCompleteSearchBoard from './SearchBoards/AutoCompleteSearchBoard'
 
 function AppBar() {
   const [searchValue, setSearchValue] = useState('')
@@ -50,7 +49,7 @@ function AppBar() {
         </div>
       </div>
       <div className="px-4 gap-4 flex items-center ">
-        <div className="h-10 flex border border-[#A4A1AA] rounded-sm text-[#A4A1AA] hover:border-white group
+        {/* <div className="h-10 flex border border-[#A4A1AA] rounded-sm text-[#A4A1AA] hover:border-white group
                 focus-within:border-white focus-within:text-white transition-colors">
           <input
             placeholder="Search..."
@@ -64,7 +63,8 @@ function AppBar() {
           <button className="relative group-hover:text-white cursor-pointer after:content-[''] after:absolute after:left-0 after:top-2 after:bottom-2 after:w-px after:bg-gray-400 hover:-translate-y-1">
             <IoSearchSharp className="w-8 mx-1"/>
           </button>
-        </div>
+        </div> */}
+        <AutoCompleteSearchBoard />
         <ModeSelect />
         {/* Xử lý hiển thị thông báo notification */}
         <Notification />

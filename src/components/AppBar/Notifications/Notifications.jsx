@@ -5,7 +5,7 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchInvitationsAPI, selectCurrentNotifications, updateBoardInvitationAPI, addNotification } from '~/redux/notifications/notificationsSlice'
 import { useEffect, useState } from 'react'
-import { socketIoInstance } from '~/main'
+import { socketIoInstance } from '~/socketClient'
 import { selectCurrentUser } from '~/redux/user/userSlice'
 import { useNavigate } from 'react-router-dom'
 
