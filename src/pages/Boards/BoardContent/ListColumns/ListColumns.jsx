@@ -53,6 +53,8 @@ function ListColumn({ columns }) {
     toggleOpenNewColumnForm()
     setNewColumnTitle('')
   }
+  const isLight = !board?.backgroundImage || board?.backgroundBrightness === 'light'
+
   return (
     <SortableContext items={columns?.map(c => c._id) || []} strategy={horizontalListSortingStrategy}>
       <div className="bg-inherit flex items-start overflow-x-auto overflow-y-hidden pb-2 w-full h-full
@@ -69,33 +71,32 @@ function ListColumn({ columns }) {
         })}
 
         {/* Add new column */}
-        { !openNewColumnForm
-          ? <div className="border-none min-w-62.5 max-w-62.5 mx-4 h-fit bg-[#ffffff3d]  rounded-lg hover:brightness-90">
+        {!openNewColumnForm
+          ? <div className={`border-none min-w-62.5 max-w-62.5 mx-4 h-fit rounded-lg hover:brightness-90 transition-all ${isLight ? 'bg-black/10' : 'bg-white/30 backdrop-blur-md'}`}>
             <Button
-              className="border-none flex items-center cursor-not-allowed gap-1 text-white leading-6 w-full justify-start pl-2 py-1 "
+              className={`border-none flex items-center cursor-not-allowed gap-1 leading-6 w-full justify-start pl-2 py-1 ${isLight ? 'text-black' : 'text-white'}`}
               onClick={toggleOpenNewColumnForm}
             >
-              <MdAddBox className="text-lg"/>
+              <MdAddBox className="text-lg" />
               <span className="text-md interceptor-loading">Add new column</span>
             </Button>
           </div>
-          : <div className="max-w-62.5 min-w-62.5 mx-2 p-1 rounded-sm h-fit bg-[#ffffff3d] flex flex-col gap-1">
-            <div className="h-10 flex border border-[#A4A1AA] rounded-sm text-[#e2dfe9] hover:border-white group
-                            focus-within:border-white focus-within:text-white transition-colors">
+          : <div className={`max-w-62.5 min-w-62.5 mx-2 p-1 rounded-sm h-fit flex flex-col gap-1 transition-all ${isLight ? 'bg-[#ebecf0] shadow-md' : 'bg-[#ffffff3d]'}`}>
+            <div className={`h-10 flex border rounded-sm transition-colors ${isLight ? 'border-gray-400 focus-within:border-blue-500' : 'border-[#A4A1AA] focus-within:border-white'}`}>
               <input
                 autoFocus
                 placeholder="Enter column title..."
-                className="pl-2 border-none outline-none bg-transparent text-amber-50"
+                className={`pl-2 border-none outline-none bg-transparent w-full ${isLight ? 'text-black' : 'text-white'}`}
                 value={newColumnTitle}
-                onChange = {(e) => setNewColumnTitle(e.target.value)}
+                onChange={(e) => setNewColumnTitle(e.target.value)}
               />
             </div>
             <div className="flex justify-between items-center px-2 mt-1">
-              <Button className="interceptor-loading text-amber-50 bg-[#68B18C] hover:bg-[#0D751B] shadow-lg"
+              <Button className="interceptor-loading text-white bg-[#68B18C] hover:bg-[#0D751B] shadow-lg"
                 onClick={addNewColumn}
               >Add column</Button>
               <AiOutlineClose
-                className="text-amber-50 cursor-pointer w-7 h-7 p-2 hover:bg-[#9C99A5] rounded-full"
+                className={`cursor-pointer w-7 h-7 p-2 hover:bg-[#9C99A5] rounded-full ${isLight ? 'text-gray-600' : 'text-white'}`}
                 onClick={toggleOpenNewColumnForm}
               />
             </div>

@@ -5,12 +5,19 @@ import { selectCurrentUser, logoutUserAPI } from '~/redux/user/userSlice'
 import { useState } from 'react'
 import { Description, Dialog, DialogPanel } from '@headlessui/react'
 import { Link } from 'react-router-dom'
+import ChangeBackgroundModal from '~/components/Modal/ActiveBackground/ChangeBackgroundModal'
 
 
 function Profile() {
   const dispatch = useDispatch()
   const currentUser = useSelector(selectCurrentUser)
   const [isOpenDialog, setIsOpenDialog] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
+  const board = useSelector((state) => state.activeBoard.currentActiveBoard)
+
+  const handleOpenChangeBackgroundModal = () => {
+    setOpenModal(true)
+  }
 
   const handleLogout = () => {
     dispatch(logoutUserAPI())
@@ -19,24 +26,33 @@ function Profile() {
     <>
       <Menu as="div" className="relative shrink-0">
         <MenuButton className="focus:outline-none  cursor-pointer">
-          <img src={currentUser?.avatar} className="w-8 h-8 rounded-full object-cover hover:brightness-90"/>
+          <img src={currentUser?.avatar} className="w-8 h-8 rounded-full object-cover hover:brightness-90" />
         </MenuButton>
         <MenuItems
           anchor="bottom end"
           modal={false}
-          className="absolute -right-2 top-full mt-1  w-32 origin-top-right rounded-xl border border-white/5 bg-white p-1 text-sm/6 text-black transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0">
+          className="absolute -right-2 top-full mt-1  w-50 origin-top-right rounded-xl border border-white/5 bg-white p-1 text-sm/6 text-black transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0">
           <MenuSection>
             <MenuItem className="m-0 w-full flex p-0 items-center justify-center ">
               <Link className="flex w-full items-center justify-center gap-2 rounded-md p-2 data-focus:bg-blue-100" to="/settings/account">
-                <img src={currentUser?.avatar} className="h-5 w-5 rounded-full object-cover"/>
+                <img src={currentUser?.avatar} className="h-5 w-5 rounded-full object-cover" />
                 Profile
               </Link>
             </MenuItem>
-            <MenuItem className="m-0 w-full flex p-0 items-center justify-center">
+            <MenuItem className="m-0 w-full flex p-0 items-center justify-center" >
               <Link className="flex w-full items-center gap-2 rounded-md p-2 data-focus:bg-blue-100" to="/notifications">
                 <MdOutlineSettings />
                 Setting
               </Link>
+            </MenuItem>
+            <MenuItem
+              className="m-0 w-full flex p-0 items-center justify-center"
+              onClick={handleOpenChangeBackgroundModal}
+            >
+              <div className="flex w-full items-center gap-2 rounded-md p-2 data-focus:bg-blue-100">
+                <img src={board?.backgroundImage} className="h-5 w-6" />
+                Change background
+              </div>
             </MenuItem>
           </MenuSection>
           <MenuSeparator className="my-2 h-px bg-gray-300" />
@@ -44,12 +60,14 @@ function Profile() {
             <MenuItem className="py-1">
               <button onClick={() => setIsOpenDialog(true)} className="flex data-focus:bg-blue-100 data-focus:text-red-500 p-2 gap-2 items-center justify-center rounded-md w-full">
                 <MdLogout />
-                Log out
+                Đăng xuất
               </button>
             </MenuItem>
           </MenuSection>
         </MenuItems>
       </Menu>
+
+      <ChangeBackgroundModal isOpen={openModal} handleClose={() => setOpenModal(false)} />
 
       <Dialog open={isOpenDialog} onClose={() => setIsOpenDialog(false)} className="relative z-50 ">
         <div className="fixed inset-0 flex w-screen items-center justify-center p-4">

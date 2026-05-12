@@ -45,7 +45,7 @@ function Board() {
   }
 
   // Khi di chuyển card trong cùng column: chỉ cần gọi API để cập nhật mảng cardOrderIds chứa nó (thay đổi vị trí trong mảng)
-  const moveCardInTheSameColumn = ( dndOrderedCards, dndOrderedCardIds, columnId ) => {
+  const moveCardInTheSameColumn = (dndOrderedCards, dndOrderedCardIds, columnId) => {
     //Update cho chuẩn dữ liệu state board
     // const newBoard = { ...board }
     const newBoard = cloneDeep(board)
@@ -94,13 +94,17 @@ function Board() {
 
   if (!board) {
     return (
-      <PageLoading caption="...Đang tải board"/>
+      <PageLoading caption="...Đang tải board" />
     )
   }
 
 
   return (
-    <div className="h-screen flow-root">
+    <div className="h-screen flow-root bg-cover bg-center bg-no-repeat transition-all duration-500"
+      style={{
+        backgroundImage: board?.backgroundImage ? `url(${board.backgroundImage})` : 'none',
+        backgroundColor: board?.backgroundImage ? 'transparent' : ''
+      }} >
       {/* Check đóng mở dựa theo state isShowModalActiveCard lưu trong redux */}
       <ActiveCard />
 

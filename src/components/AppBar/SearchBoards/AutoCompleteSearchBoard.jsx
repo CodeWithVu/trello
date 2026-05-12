@@ -98,11 +98,11 @@ function AutoCompleteSearchBoard() {
       <label className="sr-only" htmlFor="asynchronous-search-board">
         Type to search...
       </label>
-      <div className="flex items-center gap-2 rounded-md border border-white/70 bg-transparent px-2 py-1.5">
-        <MdSearch className="h-4 w-4 text-white" />
+      <div className="flex items-center gap-2 rounded-md border border-slate-400 dark:border-white/70 bg-transparent px-2 py-1.5">
+        <MdSearch className="h-4 w-4" />
         <input
           id="asynchronous-search-board"
-          className="w-full bg-transparent text-sm text-white placeholder-white/80 outline-none"
+          className="w-full bg-transparent text-sm placeholder-slate-400 dark:placeholder-white/80 outline-none"
           placeholder="Type to search..."
           value={inputValue}
           onChange={handleInputSearchChange}
@@ -114,7 +114,7 @@ function AutoCompleteSearchBoard() {
           autoComplete="off"
         />
         {loading && (
-          <span className="inline-flex h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-white/70 border-t-transparent" />
+          <span className="inline-flex h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-slate-400 dark:border-white/70 border-t-transparent" />
         )}
       </div>
 

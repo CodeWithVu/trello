@@ -71,13 +71,13 @@ function BoardContent({
     let nextColumnsAfterUpdate
 
     setOrderedColumns(prevColumns => {
-    // tìm vị trí index của cái overCard trong column đích
+      // tìm vị trí index của cái overCard trong column đích
       const overCardIndex = overColumn?.cards?.findIndex(card => card._id === overCardId)
 
       // Logic tính toán cho cardIndex mới
       let newCardIndex
       const isBelowOverItem = active.rect.current.translated
-      && active.rect.current.translated.top > over.rect.top + over.rect.height
+        && active.rect.current.translated.top > over.rect.top + over.rect.height
       const modifier = isBelowOverItem ? 1 : 0
       newCardIndex = overCardIndex >= 0 ? overCardIndex + modifier : overColumn?.cards?.length + 1
 
@@ -167,7 +167,7 @@ function BoardContent({
 
     // Xử lý kéo card giữa 2 column khác nhau
     if (activeColumn._id !== overColumn._id) {
-      moveCardBetweenDifferentColumns( overColumn,
+      moveCardBetweenDifferentColumns(overColumn,
         overCardId,
         active,
         over,
@@ -203,7 +203,7 @@ function BoardContent({
 
       // xử lý kéo card trong 2 column khác nhau
       if (oldColumnWhenDraggingCard._id !== overColumn._id) {
-        moveCardBetweenDifferentColumns( overColumn,
+        moveCardBetweenDifferentColumns(overColumn,
           overCardId,
           active,
           over,
@@ -226,7 +226,7 @@ function BoardContent({
 
         // Gọi state ở đây để tránh delay hoặc flickering trong quá trình gọi api
         setOrderedColumns(prevColumns => {
-        // Clone lại mảng orderedColumn cũ ra một cái mới để xử lý data rồi return - cập nhật lại orderedColumnState mới
+          // Clone lại mảng orderedColumn cũ ra một cái mới để xử lý data rồi return - cập nhật lại orderedColumnState mới
           const nextColumns = cloneDeep(prevColumns)
 
           // Tìm tới column mà sẽ thả
@@ -245,8 +245,7 @@ function BoardContent({
     }
 
     // Xử lý kéo thả column trong 1 board content
-    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN && active.id !== over.id)
-    {
+    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN && active.id !== over.id) {
       const oldColumnIndex = orderedColumns.findIndex(c => c._id === active.id)
       const newColumnIndex = orderedColumns.findIndex(c => c._id === over.id)
 
@@ -317,12 +316,12 @@ function BoardContent({
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="w-full h-(--board-content-height) bg-[#015FDD] dark:bg-[#34495e] py-2">
-        <ListColumn columns={orderedColumns}/>
+      <div className={`w-full h-(--board-content-height) ${board?.backgroundImage ? 'bg-transparent' : 'bg - [#015FDD]'} dark:bg-[#34495e] py-2`}>
+        <ListColumn columns={orderedColumns} />
         <DragOverlay dropAnimation={dropAnimation}>
           {(!activeDragItemType) && null}
-          {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData}/>}
-          {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.CARD) && <Card card={activeDragItemData}/>}
+          {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData} />}
+          {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.CARD) && <Card card={activeDragItemData} />}
         </DragOverlay>
       </div>
     </DndContext>

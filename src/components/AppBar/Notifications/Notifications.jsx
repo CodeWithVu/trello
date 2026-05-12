@@ -75,7 +75,7 @@ function Notifications() {
         title="Notifications"
         onClick={handleClickNotificationIcon}
       >
-        <MdOutlineNotificationsNone className="text-white" size={24} />
+        <MdOutlineNotificationsNone size={24} />
         {newNotification ? <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border border-[#024DC5] dark:border-[#2c3e50]"></span>:<span></span>}
       </PopoverButton>
 
