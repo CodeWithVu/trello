@@ -52,7 +52,7 @@ function AppBar() {
           </Button>
         </div>
       </div>
-      <div className={`px-4 gap-4 flex items-center ${board.backgroundImage ? `${textColorClass}` : 'text-black'}  dark:text-white`}>
+      <div className={`px-4 gap-4 flex items-center ${board?.backgroundImage ? `${textColorClass}` : 'text-black'}  dark:text-white`}>
         {/* <div className="h-10 flex border border-[#A4A1AA] roundd-sm text-[#A4A1AA] hover:border-white group
                 focus-within:border-white focus-within:text-white transition-colors">
           <input
