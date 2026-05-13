@@ -23,7 +23,7 @@ function App() {
   return (
     <Routes >
       {/* replace true có nghĩa là thay thế route /, tức là route / sẽ không còn trong history browser */}
-      <Route path='/' element={<Navigate to="/boards/69aee80b5e5150e63541866b" replace={true}/>}/>
+      <Route path='/' element={<Navigate to="/boards" replace={true}/>}/>
       <Route element={<ProtectedRoutes user={currentUser}/>}>
 
         {/* Board detail */}
