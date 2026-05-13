@@ -37,10 +37,6 @@ function RegisterForm() {
           </div>
         </div>
 
-        {/* Author */}
-        <div className="mt-4 flex justify-center text-gray-500">
-          Author: TrungQuanDev
-        </div>
 
         {/* Form Fields */}
         <div className="px-4 pb-4">
