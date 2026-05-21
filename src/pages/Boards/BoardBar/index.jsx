@@ -14,8 +14,8 @@ function BoardBar({ board }) {
   const isLight = !board?.backgroundImage || board?.backgroundBrightness === 'light'
 
   return (
-    <div className={`w-full h-(--board-bar-height) flex items-center justify-between ${board?.backgroundImage ? `${isLight ? 'bg-white/60' : 'bg-black/20'} ${isLight ? 'text-black' : 'text-white'} backdrop-blur-sm` : 'bg-[#015FDD] text-white'} dark:bg-[#34495e]`} >
-      <div className="flex min-w-0 flex-1 items-center overflow-x-auto overflow-y-hidden px-4
+    <div className={`w-full h-(--board-bar-height) flex items-center justify-between ${board?.backgroundImage ? `${isLight ? 'bg-white/60' : 'bg-black/20'} ${isLight ? 'text-black' : 'text-white'} backdrop-blur-sm` : 'bg-black/40 text-white'} dark:bg-[#34495e]`} >
+      <div className="flex min-w-0 flex-1 text-white items-center overflow-x-auto overflow-y-hidden px-4
         [&::-webkit-scrollbar]:w-2
         [&::-webkit-scrollbar]:h-2
         [&::-webkit-scrollbar-track]:bg-gray-100
@@ -24,7 +24,7 @@ function BoardBar({ board }) {
         dark:[&::-webkit-scrollbar-track]:bg-neutral-700
         dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
       >
-        <div className="gap-4 flex items-center shrink-0">
+        <div className="gap-4 flex items-center shrink-0 ">
           <Tooltip content={board?.description}>
             <Chip
               icon=<FaWindows />
