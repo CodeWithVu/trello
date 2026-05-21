@@ -10,6 +10,16 @@ export default defineConfig({
   define: {
     'process.env': process.env
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8017',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  },
   plugins: [react(), tailwindcss(), eslint(), svgr()],
 
   resolve: {
